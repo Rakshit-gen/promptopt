@@ -1,0 +1,29 @@
+# Binaries
+/promptopt
+/dist/
+/bin/
+*.exe
+*.test
+*.out
+
+# Coverage
+coverage.txt
+coverage.html
+
+# Local env / secrets — never commit an API key
+.env
+.env.local
+*.local
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Web
+web/node_modules/
+web/.next/
+web/out/
+web/.vercel/
+web/next-env.d.ts
