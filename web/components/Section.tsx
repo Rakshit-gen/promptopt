@@ -6,6 +6,7 @@ export function Section({
   title,
   intro,
   children,
+  surface,
   className = "",
 }: {
   id?: string;
@@ -13,11 +14,25 @@ export function Section({
   title?: string;
   intro?: React.ReactNode;
   children: React.ReactNode;
+  // Optional ground treatment so the page isn't one flat slab: "tint" is a
+  // faint raised panel, "grid" adds the dotted schematic grid on top of it.
+  surface?: "tint" | "grid";
   className?: string;
 }) {
   return (
-    <section id={id} className={`border-t border-border py-16 sm:py-24 ${className}`}>
-      <div className="container-content">
+    <section
+      id={id}
+      className={`relative overflow-hidden border-t border-border py-16 sm:py-24 ${
+        surface ? "bg-panel/30" : ""
+      } ${className}`}
+    >
+      {surface === "grid" && (
+        <div
+          className="grid-bg pointer-events-none absolute inset-0 opacity-50"
+          aria-hidden
+        />
+      )}
+      <div className="container-content relative">
         {(eyebrow || title) && (
           <Reveal className="max-w-prose">
             {eyebrow && (

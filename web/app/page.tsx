@@ -112,6 +112,7 @@ export default function HomePage() {
           eyebrow="six commands"
           title="One for each job"
           intro="The whole public surface. Pick one."
+          surface="tint"
         >
           <CommandExplorer />
         </Section>
@@ -129,6 +130,7 @@ export default function HomePage() {
         <Section
           eyebrow="a workflow"
           title="Rough prompt in, dependable prompt out"
+          surface="tint"
         >
           <Workflow />
         </Section>
@@ -169,6 +171,7 @@ export default function HomePage() {
           eyebrow="how it is built"
           title="A thin CLI over a testable engine"
           intro="Everything below the command layer has no idea the CLI exists."
+          surface="grid"
         >
           <Architecture />
         </Section>
@@ -190,15 +193,20 @@ export default function HomePage() {
         </Section>
 
         {/* 10 · Final CTA */}
-        <section className="border-t border-border py-24">
-          <Reveal className="container-content text-center">
+        <section className="relative overflow-hidden border-t border-border py-28">
+          <ShaderBackground className="opacity-50" />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg via-bg/40 to-bg"
+            aria-hidden
+          />
+          <Reveal className="container-content relative text-center">
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
               Install promptopt
             </h2>
             <p className="mx-auto mt-3 max-w-md text-[0.95rem] text-muted">
               One binary, one API key.
             </p>
-            <div className="mx-auto mt-6 flex max-w-lg items-center gap-3 rounded-md border border-border bg-panel px-3 py-2.5 font-mono text-xs">
+            <div className="mx-auto mt-6 flex max-w-lg items-center gap-3 rounded-md border border-border bg-panel/80 px-3 py-2.5 font-mono text-xs backdrop-blur">
               <code className="truncate text-fg">
                 <span className="text-accent">$ </span>
                 {site.installCommand}
@@ -208,7 +216,7 @@ export default function HomePage() {
             <div className="mt-6 flex justify-center gap-3">
               <Link
                 href="/docs/getting-started"
-                className="rounded-md border border-border bg-panel px-4 py-2 text-sm text-muted hover:text-fg"
+                className="rounded-md border border-border bg-panel/80 px-4 py-2 text-sm text-muted backdrop-blur hover:text-fg"
               >
                 Getting started
               </Link>
@@ -216,7 +224,7 @@ export default function HomePage() {
                 href={site.repo}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-md border border-border bg-panel px-4 py-2 text-sm text-muted hover:text-fg"
+                className="rounded-md border border-border bg-panel/80 px-4 py-2 text-sm text-muted backdrop-blur hover:text-fg"
               >
                 Star on GitHub
               </a>

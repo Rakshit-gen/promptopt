@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { site } from "@/lib/site";
+import { Grain } from "@/components/Grain";
 import "./globals.css";
 
 const sans = Inter({
@@ -71,6 +72,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <Grain />
         {children}
       </body>
     </html>
