@@ -45,15 +45,19 @@ export function Workflow() {
                 aria-current={on ? "step" : undefined}
                 className={`flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-xs transition-colors ${
                   on
-                    ? "border-accent/50 bg-accent/10 text-accent"
-                    : "border-border bg-panel text-faint hover:text-muted"
+                    ? "border-transparent bg-accent font-medium text-bg"
+                    : done
+                      ? "border-border bg-raised text-muted hover:text-fg"
+                      : "border-border bg-panel text-faint hover:border-borderStrong hover:text-muted"
                 }`}
               >
                 <span
                   className={`flex h-4 w-4 items-center justify-center rounded-full text-[0.6rem] ${
-                    on || done
-                      ? "bg-accent/20 text-accent"
-                      : "bg-raised text-faint"
+                    on
+                      ? "bg-bg/25 text-bg"
+                      : done
+                        ? "bg-accentDim text-bg"
+                        : "bg-raised text-faint"
                   }`}
                 >
                   {i + 1}
@@ -67,7 +71,9 @@ export function Workflow() {
                   viewBox="0 0 22 12"
                   fill="none"
                   aria-hidden
-                  className="mx-0.5 shrink-0 text-borderStrong"
+                  className={`mx-0.5 shrink-0 transition-colors ${
+                    i < active ? "text-accentDim" : "text-borderStrong"
+                  }`}
                 >
                   <path
                     d="M1 6H20M20 6L15 1M20 6L15 11"
@@ -83,7 +89,7 @@ export function Workflow() {
         })}
       </ol>
 
-      <div className="relative mt-5 overflow-hidden rounded-lg border border-border bg-panel p-5">
+      <div className="relative mt-5 overflow-hidden rounded-lg border border-border border-l-2 border-l-accent bg-panel p-5">
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
@@ -104,7 +110,7 @@ export function Workflow() {
         {!reduce && !held && (
           <motion.span
             key={`bar-${active}`}
-            className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-accent/40"
+            className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-accent"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: ADVANCE_MS / 1000, ease: "linear" }}
