@@ -1,0 +1,96 @@
+# GoReleaser configuration for promptopt.
+# Docs: https://goreleaser.com
+version: 2
+
+project_name: promptopt
+
+before:
+  hooks:
+    - go mod tidy
+    - go test ./...
+
+builds:
+  - id: promptopt
+    main: ./cmd/promptopt
+    binary: promptopt
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+      - -X main.version={{ .Version }}
+      - -X main.commit={{ .ShortCommit }}
+      - -X main.date={{ .Date }}
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - id: default
+    formats: [tar.gz]
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+    files:
+      - README.md
+      - LICENSE
+      - docs/**/*
+
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
+
+sboms:
+  - artifacts: archive
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - "Merge pull request"
+      - "Merge branch"
+  groups:
+    - title: Features
+      regexp: '^.*?feat(\(.+\))??!?:.+$'
+      order: 0
+    - title: Fixes
+      regexp: '^.*?fix(\(.+\))??!?:.+$'
+      order: 1
+    - title: Others
+      order: 999
+
+release:
+  github:
+    owner: rakshit-gen
+    name: promptopt
+  draft: false
+  prerelease: auto
+  footer: |
+    ---
+    Install:
+
+    ```
+    curl -fsSL https://promptopt.dev/install.sh | sh
+    ```
+
+brews:
+  - name: promptopt
+    repository:
+      owner: rakshit-gen
+      name: homebrew-tap
+    homepage: "https://promptopt.dev"
+    description: "AI-powered prompt engineering CLI backed by Groq"
+    license: "MIT"
+    skip_upload: auto
+    test: |
+      system "#{bin}/promptopt", "--version"

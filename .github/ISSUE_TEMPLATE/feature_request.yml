@@ -1,0 +1,27 @@
+name: Feature request
+description: Suggest a change to an existing operation or a new capability
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to do that promptopt makes hard today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: >
+        Which of the six operations does this belong to, or is it genuinely a
+        new one? promptopt keeps a small command surface, so new top-level
+        commands need a strong case.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false

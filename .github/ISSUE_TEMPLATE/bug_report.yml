@@ -1,0 +1,51 @@
+name: Bug report
+description: Something in the CLI does not work as documented
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What did you run, and what did you expect instead?
+      placeholder: |
+        I ran `promptopt compress system.md --target 40` and ...
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: >
+        The exact command and, if possible, a prompt that triggers it. Redact
+        anything sensitive — a minimal prompt that still reproduces the issue
+        is ideal.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: The terminal output. Run with `--verbose` if it is an error.
+      render: text
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `promptopt --version`
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: OS
+      options:
+        - macOS (arm64)
+        - macOS (amd64)
+        - Linux (amd64)
+        - Linux (arm64)
+        - Other
+    validations:
+      required: true
