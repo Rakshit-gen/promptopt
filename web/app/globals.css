@@ -68,6 +68,32 @@
   .kbd {
     @apply inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded border border-border bg-raised px-1 font-mono text-2xs text-muted;
   }
+
+  /* A light sweep across a button on hover. */
+  .shimmer {
+    @apply relative overflow-hidden;
+  }
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 35%,
+      rgba(245, 165, 36, 0.35) 50%,
+      transparent 65%
+    );
+    transform: translateX(-120%);
+  }
+  .shimmer:hover::after {
+    animation: shimmer-sweep 0.9s ease;
+  }
+}
+
+@keyframes shimmer-sweep {
+  to {
+    transform: translateX(120%);
+  }
 }
 
 /*

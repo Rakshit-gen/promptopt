@@ -21,7 +21,8 @@ export const site = {
   url: "https://promptopt.dev",
   repo: "https://github.com/rakshit-gen/promptopt",
   repoShort: "rakshit-gen/promptopt",
-  installCommand: "curl -fsSL https://promptopt.dev/install.sh | sh",
+  installCommand:
+    "curl -fsSL https://raw.githubusercontent.com/rakshit-gen/promptopt/master/scripts/install.sh | sh",
   keyExport: 'export GROQ_API_KEY="..."',
 } as const;
 
