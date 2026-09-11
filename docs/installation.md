@@ -1,6 +1,6 @@
 # Installation
 
-promptopt is a single static binary. It has no runtime dependencies — no
+promptopt is a single static binary. It has no runtime dependencies: no
 Python, Node, Go, Homebrew, or Docker.
 
 ## curl installer (recommended)
@@ -32,7 +32,7 @@ The script:
 
 ### Inspect before running
 
-If piping to `sh` makes you uneasy — reasonable — download and read it first:
+If piping to `sh` makes you uneasy (reasonable), download and read it first:
 
 ```sh
 curl -fsSL https://promptopt.dev/install.sh -o install.sh

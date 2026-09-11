@@ -5,7 +5,7 @@ reference, see [commands/compress](commands/compress.md).
 
 ## Words versus behavior
 
-A prompt is a set of instructions. Its length is a cost — tokens you pay on
+A prompt is a set of instructions. Its length is a cost: tokens you pay on
 every request, and context you spend that could hold something else. But the
 length is not the thing you care about; the behavior is.
 
@@ -13,28 +13,28 @@ Compression is the process of removing length without removing behavior. The
 failure mode is removing a sentence that looked redundant but was actually
 load-bearing:
 
-- "Respond in JSON." … "Return only the JSON, no prose." — the second line
+- "Respond in JSON." … "Return only the JSON, no prose." The second line
   looks like a restatement but it is doing separate work.
 - Two examples that look similar but demonstrate different edge cases.
 - A constraint buried in a paragraph of context.
 
 promptopt asks the model to make these cuts and to report its confidence that
 behavior survived, plus any specific risks. A compression that drops the score
-is telling you it is not sure — and you should look.
+is telling you it is not sure, and you should look.
 
 ## What gets cut
 
 compress targets:
 
-- **Repeated concepts** — the same idea stated more than once.
-- **Restatement** — a sentence that says what the previous sentence said.
-- **Verbose phrasing** — "in order to" → "to", "it is important that you" →
+- **Repeated concepts**: the same idea stated more than once.
+- **Restatement**: a sentence that says what the previous sentence said.
+- **Verbose phrasing**: "in order to" → "to", "it is important that you" →
   an imperative.
-- **Duplicate examples** — keeps the clearest one.
-- **Meaningless formatting** — decorative separators, headers with one line
+- **Duplicate examples**: keeps the clearest one.
+- **Meaningless formatting**: decorative separators, headers with one line
   under them.
 - **Constraints repeated in different words.**
-- **Explanations of things the model already knows** — what JSON is, what a
+- **Explanations of things the model already knows**: what JSON is, what a
   REST API is.
 - **Contextual prose that does not change the output.**
 

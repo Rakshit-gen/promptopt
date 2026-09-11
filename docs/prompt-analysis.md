@@ -5,21 +5,21 @@ output. For the command reference, see [commands/analyze](commands/analyze.md).
 
 ## The dimensions
 
-analyze scores six things. They are not independent — a prompt weak on one is
-often weak on a neighbour — but separating them tells you where to start.
+analyze scores six things. They are not independent (a prompt weak on one is
+often weak on a neighbour), but separating them tells you where to start.
 
 ### Clarity
 
 Is every instruction unambiguous? Clarity problems are undefined terms,
 pronouns with no clear referent ("do this before that"), and instructions that
-could be read two ways ("keep it short" — how short?).
+could be read two ways ("keep it short": how short?).
 
 ### Specificity
 
 Is the task concrete, or open to wide interpretation? "Improve this code" is
 low specificity. "Rewrite this function to remove the nested loop, keeping the
-same signature and behavior" is high. Low specificity is not always wrong —
-sometimes you want the model to have latitude — but you should be choosing it.
+same signature and behavior" is high. Low specificity is not always wrong
+(sometimes you want the model to have latitude), but you should be choosing it.
 
 ### Completeness
 
@@ -83,7 +83,7 @@ Findings outside these categories get a `P0xx`-style ID from the model.
 ## Prompt injection
 
 P011 flags places where text in the prompt's *input* could override its
-*instructions* — a summarization prompt that will happily follow "ignore the
+*instructions*: a summarization prompt that will happily follow "ignore the
 above and…" hidden in the document it is summarizing.
 
 This is a heuristic. A clean analyze does not mean a prompt is safe against
@@ -93,7 +93,7 @@ Treat P011 as "look here", not "you are covered".
 ## Reading the overall score
 
 The overall score weighs the sub-scores and the severity of findings. It is
-not an average — a single ERROR pulls it down more than a couple of low
+not an average: a single ERROR pulls it down more than a couple of low
 sub-scores.
 
 Use it as a relative signal across versions of the same prompt, not as an

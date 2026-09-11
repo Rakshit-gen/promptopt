@@ -6,7 +6,7 @@ way a linter checks code.
 
 ## Exit codes
 
-promptopt exits non-zero only on a real failure — a bad flag, a missing key, a
+promptopt exits non-zero only on a real failure: a bad flag, a missing key, a
 provider error. **A low quality score is not a failure.** `analyze` and `eval`
 exit 0 with a score of 2.0.
 
@@ -94,7 +94,7 @@ awk "BEGIN { exit !($current >= $baseline - 0.5) }" || {
 A CI job that checks many prompts can hit Groq's rate limit (exit 5). Options:
 
 - Run the checks serially with a short `sleep` between them.
-- Raise `PROMPTOPT_MAX_RETRIES` — promptopt honours `Retry-After`.
+- Raise `PROMPTOPT_MAX_RETRIES`; promptopt honours `Retry-After`.
 - Only check the prompts that changed:
 
 ```yaml
@@ -118,5 +118,5 @@ promptopt analyze prompts/support.md --model openai/gpt-oss-20b --json
 
 - Do not run `optimize`/`compress`/`expand` in CI and commit the result
   automatically. Those rewrite the prompt; a human should review the rewrite.
-- Do not gate on `eval`'s pass count as if it were a test result — see
+- Do not gate on `eval`'s pass count as if it were a test result: see
   [evaluation](evaluation.md).

@@ -9,26 +9,26 @@ Change how a prompt is expressed without changing what it asks for.
 ## What it does
 
 transform takes a prompt and rewrites it into a different structure or
-representation. It preserves intent — the transformed prompt asks for the same
-thing — but reorganizes it for a different use.
+representation. It preserves intent (the transformed prompt asks for the same
+thing), but reorganizes it for a different use.
 
 | `--to` | Result |
 | --- | --- |
 | `markdown` | Clean Markdown: headings, lists, and a fenced output section. Reorganized for readability. |
-| `xml` | Semantic tags — `<role>`, `<task>`, `<context>`, `<constraints>`, `<output_format>`, `<examples>` — for content that exists. |
+| `xml` | Semantic tags (`<role>`, `<task>`, `<context>`, `<constraints>`, `<output_format>`, `<examples>`) for content that exists. |
 | `json` | A structured object with keys like `role`, `task`, `context`, `constraints` (array), `output_format`, `examples`. |
 | `system` | A standing system prompt in the second person. One-off phrasing becomes a note about what user messages will contain. |
 | `template` | `{{variables}}` in place of values that change between runs. |
 | `agent` | A goal, available context, and explicit stopping conditions, for an autonomous agent. |
 
-The architecture allows new targets without touching the CLI — see
+The architecture allows new targets without touching the CLI: see
 [CONTRIBUTING.md](../../CONTRIBUTING.md#adding-a-transform-target).
 
 ## Template mode
 
 `--to template` finds the values in a prompt that would realistically change
 between runs and replaces them with `{{snake_case}}` variables. It
-parameterizes inputs, target languages, domains, and file names — not every
+parameterizes inputs, target languages, domains, and file names, not every
 noun.
 
 ```
@@ -73,10 +73,10 @@ content that had to be approximated. promptopt validates it.
 
 | Flag | Default | Effect |
 | --- | --- | --- |
-| `--to <target>` | — (required) | One of the targets above. |
-| `--output <file>`, `-o` | — | Write the transformed prompt to a file. |
-| `--json` | — | Emit the `TransformResult` object. |
-| `--quiet`, `-q` | — | Print only the transformed prompt. |
+| `--to <target>` | required | One of the targets above. |
+| `--output <file>`, `-o` | none | Write the transformed prompt to a file. |
+| `--json` | none | Emit the `TransformResult` object. |
+| `--quiet`, `-q` | none | Print only the transformed prompt. |
 
 ## Examples
 

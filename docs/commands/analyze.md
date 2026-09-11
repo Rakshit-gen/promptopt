@@ -21,9 +21,9 @@ analyze reads a prompt and returns:
 
 | Severity | Meaning |
 | --- | --- |
-| `ERROR` | Likely to cause wrong or unsafe output — conflicting instructions, contradictory constraints, an injection path that overrides the task. |
-| `WARNING` | Likely to degrade quality — undefined output format, repeated constraints, ambiguous terms, missing edge cases. |
-| `INFO` | Worth knowing, low impact — an inert role line, mild verbosity, a stylistic inconsistency. |
+| `ERROR` | Likely to cause wrong or unsafe output: conflicting instructions, contradictory constraints, an injection path that overrides the task. |
+| `WARNING` | Likely to degrade quality: undefined output format, repeated constraints, ambiguous terms, missing edge cases. |
+| `INFO` | Worth knowing, low impact: an inert role line, mild verbosity, a stylistic inconsistency. |
 
 Finding IDs are stable (`P001`–`P014` for the common categories, `P0xx` for
 others) so you can reference them in review and, later, suppress them.
@@ -55,7 +55,7 @@ one structured report.
 ## Flags
 
 analyze takes the [shared flags](README.md#shared-flags). It has no
-operation-specific flags. `--quiet` and `--output` do nothing here — there is
+operation-specific flags. `--quiet` and `--output` do nothing here: there is
 no single "result prompt", only the report. Use `--json` for machine output.
 
 ## Examples
@@ -113,6 +113,6 @@ $ promptopt analyze prompt.txt
   with one fixable WARNING is often fine; a 7.5 with an ERROR is not.
 - **Expecting the exit code to reflect the score.** It does not. analyze exits
   0 unless something actually failed. Gate on the JSON.
-- **Running it once and moving on.** Fix the findings, then run it again — the
+- **Running it once and moving on.** Fix the findings, then run it again. The
   scores should move, and new findings sometimes surface once the loud ones
   are gone.

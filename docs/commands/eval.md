@@ -17,7 +17,7 @@ eval returns:
   assessment of what *this* prompt would actually cause. Cases cover at least
   a normal input, an ambiguous one, an out-of-scope or adversarial one, and an
   edge case (empty, oversized, malformed).
-- **Weaknesses** — the concrete problems the probing surfaced, most important
+- **Weaknesses**: the concrete problems the probing surfaced, most important
   first.
 - A **summary** of whether the prompt is ready.
 
@@ -28,7 +28,7 @@ and reasons through generated test cases. It does not yet run those cases
 against a model, compare models, or track a prompt across versions.
 
 The internal API and the JSON shape are built so those can be added without a
-breaking change — `test_cases` already carries a `pass` verdict per case, and
+breaking change: `test_cases` already carries a `pass` verdict per case, and
 `scores` is the shared `ScoreCard` used by `analyze`. See
 [evaluation](../evaluation.md) for the design.
 
@@ -36,7 +36,7 @@ breaking change — `test_cases` already carries a `pass` verdict per case, and
 
 - Before a prompt goes into a system where wrong output has a cost.
 - After `optimize` or `compress`, to confirm behavior held up.
-- When a prompt fails in ways `analyze` did not predict — eval's adversarial
+- When a prompt fails in ways `analyze` did not predict: eval's adversarial
   and edge-case probes catch things static reasoning misses.
 
 ## When not to use it
@@ -56,7 +56,7 @@ computed from the sub-scores if omitted.
 ## Flags
 
 eval takes the [shared flags](README.md#shared-flags) and has no
-operation-specific flags. `--quiet` and `--output` do nothing — there is no
+operation-specific flags. `--quiet` and `--output` do nothing: there is no
 result prompt, only the report. Use `--json`.
 
 ## Examples
@@ -107,7 +107,7 @@ $ promptopt eval prompt.txt
 ## Common mistakes
 
 - **Reading the pass count as a test result.** eval did not run those inputs
-  through a model — the checkmarks are its judgement of how the prompt is
+  through a model: the checkmarks are its judgement of how the prompt is
   written. Treat them as a review, not a test report.
 - **Expecting the exit code to reflect the score.** It does not. eval exits 0
   unless something failed.

@@ -62,9 +62,9 @@ to review the diff yourself.
 | `--target <n>` | 0 | Target reduction percentage, 0–95. `0` means "as much as is safe". |
 | `--aggressive` | false | Allow dropping marginal context and collapsing examples harder. |
 | `--preserve-behavior` | false | Refuse any cut not confidently safe, even if it misses the target. |
-| `--output <file>`, `-o` | — | Write the compressed prompt to a file. |
-| `--json` | — | Emit the `CompressResult` object. |
-| `--quiet`, `-q` | — | Print only the compressed prompt. |
+| `--output <file>`, `-o` | none | Write the compressed prompt to a file. |
+| `--json` | none | Emit the `CompressResult` object. |
+| `--quiet`, `-q` | none | Print only the compressed prompt. |
 
 `--aggressive` and `--preserve-behavior` pull in opposite directions. If you
 set both, `preserve-behavior` wins on any individual cut.
@@ -120,7 +120,7 @@ $ promptopt compress system-prompt.md --target 30
   The gap is reported, not hidden.
 - **Ignoring the behavior risks list.** It is short and specific for a reason.
   If it says "the compressed prompt no longer tells the model to cite
-  sources", that is a real change — put it back if you need it.
+  sources", that is a real change. Put it back if you need it.
 - **Compressing before optimizing.** If the prompt is also unclear, optimize
   first. A clear prompt compresses better because redundancy is easier to
   spot.

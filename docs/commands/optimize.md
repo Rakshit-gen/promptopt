@@ -23,7 +23,7 @@ return a rewritten version that keeps the same intent.
 
 Then it rewrites the prompt to fix what it can and reports what it changed,
 the token count before and after, a quick quality read on the result, and any
-warnings — for example, intent it had to infer.
+warnings, for example intent it had to infer.
 
 ## When to use it
 
@@ -55,10 +55,10 @@ forbids adding requirements the author did not state or clearly imply.
 
 | Flag | Default | Effect |
 | --- | --- | --- |
-| `--goal <text>` | — | Extra guidance about what the prompt should achieve. Use it when the objective is not obvious from the prompt alone. |
-| `--output <file>`, `-o` | — | Write the optimized prompt to a file. |
-| `--json` | — | Emit the `OptimizeResult` object. |
-| `--quiet`, `-q` | — | Print only the optimized prompt. |
+| `--goal <text>` | none | Extra guidance about what the prompt should achieve. Use it when the objective is not obvious from the prompt alone. |
+| `--output <file>`, `-o` | none | Write the optimized prompt to a file. |
+| `--json` | none | Emit the `OptimizeResult` object. |
+| `--quiet`, `-q` | none | Print only the optimized prompt. |
 
 Plus the [shared flags](README.md#shared-flags).
 
@@ -135,7 +135,7 @@ With `--json`:
   lot.
 - **Running it on a prompt that is already good.** It will make small changes
   and tell you the prompt was already in good shape. That is a valid result,
-  not a wasted call — but `analyze` is cheaper if you just want confirmation.
+  not a wasted call, but `analyze` is cheaper if you just want confirmation.
 
 ## Token counts
 

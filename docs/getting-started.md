@@ -58,7 +58,7 @@ report still goes to your terminal.
 ## 4. Use it in a pipeline
 
 Every command supports `--json`, which prints a single stable object and
-nothing else — no color, no headings.
+nothing else: no color, no headings.
 
 ```sh
 promptopt analyze prompt.txt --json | jq '.scores.overall'
@@ -73,6 +73,6 @@ cat draft.txt | promptopt optimize -q | promptopt compress -q > final.txt
 
 ## Next
 
-- [Commands overview](commands/README.md) — what each of the six does and when
-- [Configuration](configuration.md) — defaults, models, timeouts
-- [Using promptopt in CI](ci.md) — gate a prompt's quality in a pipeline
+- [Commands overview](commands/README.md): what each of the six does and when
+- [Configuration](configuration.md): defaults, models, timeouts
+- [Using promptopt in CI](ci.md): gate a prompt's quality in a pipeline

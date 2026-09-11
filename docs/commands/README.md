@@ -11,7 +11,7 @@ promptopt has six operations. They are the whole public surface.
 | [transform](transform.md) | Convert a prompt to markdown, XML, JSON, a system prompt, a template, or an agent brief. |
 | [eval](eval.md) | Check whether a prompt is ready to depend on, with generated test cases. |
 
-Smaller transformations — clarify, dedupe, reorder, systemize, parameterize —
+Smaller transformations (clarify, dedupe, reorder, systemize, parameterize)
 are chosen internally by each command. They are not commands you invoke.
 
 ## Shared behavior

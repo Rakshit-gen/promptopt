@@ -16,7 +16,7 @@ evaluation criteria, and at least one worked example.
 
 The part that matters is the line between **what you asked for** and **what
 expand added**. Everything expand adds that is not in your original is labeled
-as an assumption — both in the report and inside the expanded prompt — so you
+as an assumption, both in the report and inside the expanded prompt, so you
 can correct it. expand does not invent facts, numbers, names, or domain rules;
 where a detail is needed and missing, it makes a reasonable default explicit
 rather than silently baking it in.
@@ -61,9 +61,9 @@ assumptions prominently, because they are the thing you most need to check.
 | Flag | Default | Effect |
 | --- | --- | --- |
 | `--depth <level>` | `detailed` | `concise`, `detailed`, or `production`. |
-| `--output <file>`, `-o` | — | Write the expanded prompt to a file. |
-| `--json` | — | Emit the `ExpandResult` object. |
-| `--quiet`, `-q` | — | Print only the expanded prompt. |
+| `--output <file>`, `-o` | none | Write the expanded prompt to a file. |
+| `--json` | none | Emit the `ExpandResult` object. |
+| `--quiet`, `-q` | none | Print only the expanded prompt. |
 
 ## Examples
 

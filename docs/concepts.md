@@ -29,7 +29,7 @@ promptopt asks Groq for a JSON object (`response_format: json_object`) and
 parses it into a typed Go struct. It does not regex LLM prose. The parser:
 
 - tolerates a model that wraps the object in ```` ```json ```` fences or emits
-  reasoning text before the answer — it extracts the first balanced top-level
+  reasoning text before the answer, and extracts the first balanced top-level
   object
 - validates the object against the expected shape
 - clamps scores into 0–10 and drops empty list entries

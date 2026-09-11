@@ -43,7 +43,7 @@ promptopt analyze big-prompt.md --model openai/gpt-oss-120b
 ## "The model did not return usable JSON..." (exit 8)
 
 The model's response could not be parsed into the expected structure. Usually
-transient — retry. If it persists on a specific model, that model handles
+transient, so retry. If it persists on a specific model, that model handles
 structured output poorly; switch:
 
 ```sh
@@ -85,7 +85,7 @@ actually piping into it and not just redirecting a closed descriptor.
 
 ## Colors are showing up in a file or a pipe
 
-They should not — promptopt disables color when stdout is not a terminal. If a
+They should not: promptopt disables color when stdout is not a terminal. If a
 tool is capturing output through a pseudo-terminal, force it off:
 
 ```sh

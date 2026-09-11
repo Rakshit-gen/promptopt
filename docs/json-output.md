@@ -57,7 +57,7 @@ All values are 0–10. Fields not relevant to an operation are `0` and omitted
 
 `severity` is one of `INFO`, `WARNING`, `ERROR`.
 
-## optimize — OptimizeResult
+## optimize · OptimizeResult
 
 ```json
 {
@@ -70,7 +70,7 @@ All values are 0–10. Fields not relevant to an operation are `0` and omitted
 }
 ```
 
-## compress — CompressResult
+## compress · CompressResult
 
 ```json
 {
@@ -84,7 +84,7 @@ All values are 0–10. Fields not relevant to an operation are `0` and omitted
 }
 ```
 
-## expand — ExpandResult
+## expand · ExpandResult
 
 ```json
 {
@@ -100,7 +100,7 @@ All values are 0–10. Fields not relevant to an operation are `0` and omitted
 }
 ```
 
-## analyze — AnalyzeResult
+## analyze · AnalyzeResult
 
 ```json
 {
@@ -116,7 +116,7 @@ All values are 0–10. Fields not relevant to an operation are `0` and omitted
 
 Findings are ordered most-severe-first.
 
-## transform — TransformResult
+## transform · TransformResult
 
 ```json
 {
@@ -133,7 +133,7 @@ Findings are ordered most-severe-first.
 `variables` is present only for `--to template`, sorted and de-duplicated
 (merged from the model's list and a scan of the output).
 
-## eval — EvalResult
+## eval · EvalResult
 
 ```json
 {

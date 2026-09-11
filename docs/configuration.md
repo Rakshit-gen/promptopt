@@ -3,10 +3,10 @@
 promptopt resolves configuration from four layers. Each overrides the one
 below it:
 
-1. **Command-line flags** — `--model`, `--timeout`, `--temperature`,
+1. **Command-line flags**: `--model`, `--timeout`, `--temperature`,
    `--output`/`--json`, `--no-color`
 2. **Environment variables**
-3. **Config file** — `~/.config/promptopt/config.yaml`
+3. **Config file**: `~/.config/promptopt/config.yaml`
 4. **Built-in defaults**
 
 To see what a run would actually use:
