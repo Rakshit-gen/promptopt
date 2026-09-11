@@ -62,17 +62,17 @@ void main() {
   );
   float f = fbm(p + 2.6 * r);
 
-  vec3 base = vec3(0.039, 0.043, 0.051);
-  vec3 teal = vec3(0.368, 0.918, 0.831);
-  vec3 blue = vec3(0.278, 0.443, 0.878);
+  vec3 base = vec3(0.043, 0.039, 0.035);
+  vec3 warm = vec3(0.102, 0.090, 0.078);
+  vec3 amber = vec3(0.961, 0.647, 0.141);
 
   vec3 col = base;
-  col += (teal - base) * smoothstep(0.30, 1.05, f) * 0.30;
-  col += (blue - base) * smoothstep(0.55, 1.1, r.y) * 0.14;
-  col += teal * pow(max(0.0, r.x - 0.45), 2.0) * 0.16;
+  col += (warm - base) * smoothstep(0.30, 1.05, f) * 0.55;
+  col += (amber - base) * smoothstep(0.62, 1.15, r.y) * 0.10;
+  col += amber * pow(max(0.0, r.x - 0.55), 2.2) * 0.10;
 
   // subtle scanline shimmer
-  col += teal * 0.015 * sin(uv.y * u_res.y * 0.6 + u_time * 2.0);
+  col += amber * 0.008 * sin(uv.y * u_res.y * 0.6 + u_time * 2.0);
 
   float vig = smoothstep(1.25, 0.15, length(uv - 0.5));
   col = mix(base, col, vig);
