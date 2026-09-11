@@ -316,32 +316,32 @@ Rules:
   ],
 } as const;
 
-/** The linear workflow diagram steps. */
+/** The linear workflow: a prompt in, a better prompt out. */
 export const workflow = [
   {
-    step: "input",
+    label: "prompt",
     title: "A prompt",
-    body: "From an argument, a file, or stdin. No project setup, no config required to start.",
+    body: "From an argument, a file, or stdin. No project setup, no config to start.",
   },
   {
-    step: "analyze",
+    label: "analyze",
     title: "analyze",
-    body: "Score it and list findings — conflicts, missing format, repeated constraints, injection exposure.",
+    body: "Score it, list findings — conflicts, missing format, repeated constraints, injection exposure.",
   },
   {
-    step: "transform",
-    title: "optimize / compress / transform",
+    label: "rewrite",
+    title: "optimize · compress · transform",
     body: "Rewrite for clarity, cut tokens, or convert to a template or system prompt. Intent is preserved.",
   },
   {
-    step: "eval",
+    label: "eval",
     title: "eval",
     body: "Probe the result with generated test cases before you depend on it.",
   },
   {
-    step: "output",
+    label: "result",
     title: "A better prompt",
-    body: "To a file with -o, or piped to the next command. JSON out for anything scripted.",
+    body: "To a file with -o, or piped to the next command. JSON for anything scripted.",
   },
 ] as const;
 
