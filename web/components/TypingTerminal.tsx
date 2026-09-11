@@ -11,7 +11,7 @@ import type { TerminalLine } from "@/lib/demo";
 // height, so the box never resizes as it moves between commands. Under
 // prefers-reduced-motion the first run is shown in full and the cycle is off.
 
-type Phase = "typing" | "printing" | "hold";
+type Phase = "typing" | "printing";
 
 export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
   const reduce = useReducedMotion();
@@ -45,7 +45,6 @@ export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
     if (reduce) {
       setTyped(command);
       setVisibleOutput(outputLines.length);
-      setPhase("hold");
       return;
     }
 
@@ -65,7 +64,10 @@ export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [si, reduce]);
 
-  // Print the output, then advance to the next run.
+  // Print the output, then, after a hold, advance to the next run. The advance
+  // timer must not be scheduled via a state change that re-runs this effect,
+  // or its own cleanup would cancel it — so phase stays "printing" and the
+  // typing effect (keyed on `si`) resets everything when the index changes.
   useEffect(() => {
     if (phase !== "printing" || reduce) return;
     let n = 0;
@@ -75,7 +77,6 @@ export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
       if (n < outputLines.length) {
         after(outputLines[n - 1]?.kind === "gap" ? 45 : 95, printNext);
       } else {
-        setPhase("hold");
         after(2600, () => setSi((v) => (v + 1) % scripts.length));
       }
     };
