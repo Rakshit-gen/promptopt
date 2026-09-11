@@ -1,4 +1,4 @@
-// The promptopt mascot: a cat — the `cat` command, sitting at the terminal.
+// The promptopt mascot: a cat, the `cat` command, sitting at the terminal.
 // Its tail ends in a blinking cursor. No robot, no gradient.
 
 export function Mascot({ className = "" }: { className?: string }) {

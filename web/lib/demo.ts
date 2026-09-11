@@ -60,7 +60,7 @@ export const heroScripts: TerminalLine[][] = [
     { kind: "output", text: "  + set role: programming assistant", tone: "ok" },
     { kind: "output", text: "  + added a rule for vague requests", tone: "ok" },
     { kind: "gap" },
-    { kind: "output", text: "  ! longer now — compress if it matters", tone: "warn" },
+    { kind: "output", text: "  ! longer now, compress if it matters", tone: "warn" },
   ],
   [
     { kind: "input", text: 'promptopt expand "a payment API"' },
@@ -294,7 +294,7 @@ Output: a reply, in plain text, no greeting line or signature.
 
 Rules:
 - Address every question and request in the message.
-- Keep it to what is needed — no filler, no repeated apologies.
+- Keep it to what is needed: no filler, no repeated apologies.
 - If answering requires information you were not given, do not guess.
   State what is missing and what the agent should confirm.`,
   tokensBefore: 168,
@@ -318,7 +318,7 @@ export const workflow = [
   {
     label: "analyze",
     title: "analyze",
-    body: "Score it, list findings — conflicts, missing format, repeated constraints, injection exposure.",
+    body: "Score it, list findings: conflicts, missing format, repeated constraints, injection exposure.",
   },
   {
     label: "rewrite",
@@ -348,7 +348,7 @@ export const architecture = [
 export const devFacts = [
   {
     title: "Reads from stdin",
-    body: "cat prompt.txt | promptopt analyze — every command takes piped input.",
+    body: "cat prompt.txt | promptopt analyze. Every command takes piped input.",
   },
   {
     title: "Reads files",

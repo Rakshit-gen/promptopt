@@ -1,5 +1,5 @@
 // Documentation loader. The canonical docs are the Markdown files in the
-// repository's top-level docs/ directory — the same files someone browsing the
+// repository's top-level docs/ directory, the same files someone browsing the
 // repo on GitHub reads. This module maps them to site routes, resolves the
 // relative .md links between them, and extracts a table of contents.
 
@@ -149,7 +149,7 @@ function rewriteLinks(md: string, currentFile: string): string {
     );
 
     if (fromDocs.startsWith("../")) {
-      // Points outside docs/ — link to the file on GitHub.
+      // Points outside docs/: link to the file on GitHub.
       const repoPath = path.posix.normalize(
         path.posix.join("docs", currentDir, rawPath),
       );

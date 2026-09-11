@@ -74,7 +74,7 @@ export function BeforeAfter() {
           })}
         </ul>
         <p className="mt-4 text-2xs text-faint">
-          Intent is unchanged — the optimized prompt still asks for a customer
+          Intent is unchanged: the optimized prompt still asks for a customer
           reply. It just stops repeating itself and says what &quot;done&quot;
           means.
         </p>

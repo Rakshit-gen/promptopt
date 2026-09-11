@@ -7,7 +7,7 @@ import type { TerminalLine } from "@/lib/demo";
 
 // A terminal that cycles through a list of scripted runs on its own: each run
 // types its command, prints the output line by line, holds, then the next
-// begins. It is also controllable — the command rail above it jumps straight
+// begins. It is also controllable: the command rail above it jumps straight
 // to a run, and hovering the terminal pauses the auto-advance. The transcript
 // area is a fixed height so the box never resizes between commands. Under
 // prefers-reduced-motion the first run shows in full and nothing animates.
@@ -18,7 +18,7 @@ import type { TerminalLine } from "@/lib/demo";
 
 type Phase = "typing" | "printing" | "done";
 
-const HOLD_MS = 2800;
+const HOLD_MS = 600;
 
 export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
   const reduce = useReducedMotion();
@@ -96,7 +96,7 @@ export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, reduce]);
 
-  // 3 · Hold, then advance — unless paused (pointer is over the terminal).
+  // 3 · Hold, then advance, unless paused (pointer is over the terminal).
   useEffect(() => {
     if (phase !== "done" || paused || reduce) return;
     const t = setTimeout(
@@ -129,7 +129,7 @@ export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
         ))}
       </div>
 
-      <TerminalChrome title="zsh — promptopt">
+      <TerminalChrome title="zsh · promptopt">
         <div
           aria-live="polite"
           className="h-[16.5rem] overflow-hidden sm:h-[17rem]"

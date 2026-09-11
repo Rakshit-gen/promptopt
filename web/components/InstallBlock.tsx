@@ -6,14 +6,14 @@ import { site } from "@/lib/site";
 
 const tabs = {
   macOS: [
-    "# Apple silicon or Intel — the installer detects it",
+    "# works on Apple silicon or Intel, detected automatically",
     site.installCommand,
     "",
     "# then set your key (from https://console.groq.com/keys)",
     site.keyExport,
   ].join("\n"),
   Linux: [
-    "# amd64 or arm64 — the installer detects it",
+    "# works on amd64 or arm64, detected automatically",
     site.installCommand,
     "",
     "# add ~/.local/bin to PATH if the installer asks, then",
@@ -71,7 +71,7 @@ export function InstallBlock() {
       <div className="border-t border-border px-4 py-2.5 text-2xs text-faint">
         The installer checks the SHA256 checksum before installing. It needs
         only <code className="text-muted">curl</code> and{" "}
-        <code className="text-muted">tar</code> — no Python, Node, Go, Homebrew,
+        <code className="text-muted">tar</code>, no Python, Node, Go, Homebrew,
         or Docker.
       </div>
     </div>

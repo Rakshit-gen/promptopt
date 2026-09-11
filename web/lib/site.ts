@@ -5,7 +5,7 @@ export const site = {
   name: "promptopt",
   // A concise technical positioning statement, not a slogan.
   description:
-    "A command-line tool for prompt engineering. Inspect a prompt, see where it is weak or wasteful, and rewrite it — without changing what it asks a model to do. Inference runs on Groq.",
+    "A command-line tool for prompt engineering. Inspect a prompt, see where it is weak or wasteful, and rewrite it without changing what it asks a model to do. Inference runs on Groq.",
   tagline: "Understand your prompts, then make them better.",
   url: "https://promptopt.dev",
   repo: "https://github.com/rakshit-gen/promptopt",
