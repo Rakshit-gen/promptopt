@@ -59,7 +59,7 @@ export function CommandExplorer() {
             </div>
 
             <div className="mt-4 grid gap-4 lg:grid-cols-2">
-              <div className="flex flex-col overflow-hidden rounded-lg border border-border bg-panel">
+              <div className="min-w-0 flex flex-col overflow-hidden rounded-lg border border-border bg-panel">
                 <div className="flex items-center justify-between border-b border-border px-3 py-2">
                   <span className="font-mono text-2xs text-faint">
                     input · {demo.input.label}
@@ -70,7 +70,7 @@ export function CommandExplorer() {
                 </pre>
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="min-w-0 flex flex-col gap-2">
                 <div className="flex min-h-[2.75rem] items-center justify-between gap-2 rounded-lg border border-border bg-raised px-3 py-2">
                   <code className="break-all font-mono text-[0.78rem] text-fg">
                     <span className="text-accent">$ </span>

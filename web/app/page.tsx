@@ -28,7 +28,7 @@ export default function HomePage() {
             aria-hidden
           />
           <div className="container-content relative grid w-full gap-12 py-16 lg:grid-cols-[1.05fr_1fr] lg:items-center">
-            <div>
+            <div className="min-w-0">
               <h1 className="text-balance text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl">
                 Work on your prompts
                 <br />
