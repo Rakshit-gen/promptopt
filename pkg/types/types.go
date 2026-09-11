@@ -19,6 +19,7 @@ type TokenReport struct {
 // Severity is the level attached to an analysis finding.
 type Severity string
 
+// Finding severities, least to most severe.
 const (
 	SeverityInfo    Severity = "INFO"
 	SeverityWarning Severity = "WARNING"

@@ -106,10 +106,6 @@ func newTheme(color bool) Theme {
 
 // helpers shared by the render_*.go files.
 
-func (w *Writer) p(format string, args ...any) {
-	fmt.Fprintf(w.out, format, args...)
-}
-
 func (w *Writer) nl() { fmt.Fprintln(w.out) }
 
 func (w *Writer) line(s string) { fmt.Fprintln(w.out, s) }
@@ -136,13 +132,6 @@ func (w *Writer) scoreBar(label string, score float64) string {
 		col = w.theme.Warn
 	}
 	return fmt.Sprintf("  %-16s %s  %s", label, col.Render(bar), w.theme.Number.Render(fmt.Sprintf("%.1f", score)))
-}
-
-func plural(n int, one, many string) string {
-	if n == 1 {
-		return one
-	}
-	return many
 }
 
 // humanInt formats an int with thousands separators.

@@ -47,7 +47,7 @@ func (e *Engine) Analyze(ctx context.Context, in AnalyzeInput) (*types.AnalyzeRe
 	}
 
 	var raw analyzeRaw
-	if _, err := e.call(ctx, "analyze", "PROMPT TO ANALYZE:\n\n"+in.Prompt, &raw); err != nil {
+	if err := e.call(ctx, "analyze", "PROMPT TO ANALYZE:\n\n"+in.Prompt, &raw); err != nil {
 		return nil, err
 	}
 

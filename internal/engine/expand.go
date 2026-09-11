@@ -11,6 +11,7 @@ import (
 // Depth controls how far expand goes.
 type Depth string
 
+// The supported expansion depths, shallowest to deepest.
 const (
 	DepthConcise    Depth = "concise"
 	DepthDetailed   Depth = "detailed"
@@ -59,7 +60,7 @@ func (e *Engine) Expand(ctx context.Context, in ExpandInput) (*types.ExpandResul
 	user := "PROMPT TO EXPAND:\n\n" + in.Prompt + "\n\nDEPTH LEVEL: " + string(in.Depth)
 
 	var raw expandRaw
-	if _, err := e.call(ctx, "expand", user, &raw); err != nil {
+	if err := e.call(ctx, "expand", user, &raw); err != nil {
 		return nil, err
 	}
 	if strings.TrimSpace(raw.Expanded) == "" {

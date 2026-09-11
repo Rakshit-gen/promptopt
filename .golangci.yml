@@ -20,9 +20,18 @@ linters:
           disabled: false
         - name: package-comments
           disabled: false
+    errcheck:
+      # Writes to a caller-owned stdout/stderr/buffer stream. A failed write
+      # to the terminal is not actionable at these call sites.
+      exclude-functions:
+        - fmt.Fprint
+        - fmt.Fprintf
+        - fmt.Fprintln
 
   exclusions:
     generated: lax
+    paths:
+      - web/
     rules:
       - path: _test\.go
         linters:

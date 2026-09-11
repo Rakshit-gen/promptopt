@@ -41,7 +41,7 @@ func (e *Engine) Eval(ctx context.Context, in EvalInput) (*types.EvalResult, err
 	}
 
 	var raw evalRaw
-	if _, err := e.call(ctx, "eval", "PROMPT TO EVALUATE:\n\n"+in.Prompt, &raw); err != nil {
+	if err := e.call(ctx, "eval", "PROMPT TO EVALUATE:\n\n"+in.Prompt, &raw); err != nil {
 		return nil, err
 	}
 

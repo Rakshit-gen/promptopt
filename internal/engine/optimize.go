@@ -44,11 +44,9 @@ func (e *Engine) Optimize(ctx context.Context, in OptimizeInput) (*types.Optimiz
 	}
 
 	var raw optimizeRaw
-	usage, err := e.call(ctx, "optimize", user, &raw)
-	if err != nil {
+	if err := e.call(ctx, "optimize", user, &raw); err != nil {
 		return nil, err
 	}
-	_ = usage
 
 	if strings.TrimSpace(raw.Optimized) == "" {
 		return nil, apperr.New("The optimizer returned an empty prompt.",

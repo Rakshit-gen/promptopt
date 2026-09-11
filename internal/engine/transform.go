@@ -12,6 +12,7 @@ import (
 // Target is a transform output representation.
 type Target string
 
+// Every supported transform target.
 const (
 	TargetMarkdown Target = "markdown"
 	TargetXML      Target = "xml"
@@ -62,7 +63,7 @@ func (e *Engine) Transform(ctx context.Context, in TransformInput) (*types.Trans
 	user := "PROMPT TO TRANSFORM:\n\n" + in.Prompt + "\n\nTARGET REPRESENTATION: " + string(in.Target)
 
 	var raw transformRaw
-	if _, err := e.call(ctx, "transform", user, &raw); err != nil {
+	if err := e.call(ctx, "transform", user, &raw); err != nil {
 		return nil, err
 	}
 	if strings.TrimSpace(raw.Transformed) == "" {

@@ -53,7 +53,7 @@ func (e *Engine) Compress(ctx context.Context, in CompressInput) (*types.Compres
 	fmt.Fprintf(&b, "- preserve-behavior: %t\n", in.PreserveBehavior)
 
 	var raw compressRaw
-	if _, err := e.call(ctx, "compress", b.String(), &raw); err != nil {
+	if err := e.call(ctx, "compress", b.String(), &raw); err != nil {
 		return nil, err
 	}
 	if strings.TrimSpace(raw.Compressed) == "" {

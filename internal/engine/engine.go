@@ -82,10 +82,10 @@ func sign(f float64) float64 {
 // call runs one structured completion: system = embedded op instructions,
 // user = the assembled request. It requests a JSON object, extracts it from
 // whatever the model returned, and unmarshals into out.
-func (e *Engine) call(ctx context.Context, op, userContent string, out any) (groq.Usage, error) {
+func (e *Engine) call(ctx context.Context, op, userContent string, out any) error {
 	system, err := prompts.Load(op)
 	if err != nil {
-		return groq.Usage{}, apperr.Wrap(err, "Internal error: missing prompt template.", "")
+		return apperr.Wrap(err, "Internal error: missing prompt template.", "")
 	}
 
 	resp, err := e.client.Complete(ctx, groq.Request{
@@ -98,12 +98,12 @@ func (e *Engine) call(ctx context.Context, op, userContent string, out any) (gro
 		},
 	})
 	if err != nil {
-		return groq.Usage{}, err
+		return err
 	}
 
 	obj, err := extractJSONObject(resp.Text)
 	if err != nil {
-		return resp.Usage, apperr.Wrap(err,
+		return apperr.Wrap(err,
 			"The model did not return usable JSON for this operation.",
 			"Retry the command. If it persists, try --model with a model that\n"+
 				"supports structured output, such as openai/gpt-oss-120b.").
@@ -115,13 +115,13 @@ func (e *Engine) call(ctx context.Context, op, userContent string, out any) (gro
 	if err := dec.Decode(out); err != nil {
 		// Retry once more leniently: unknown fields are not fatal.
 		if err2 := json.Unmarshal([]byte(obj), out); err2 != nil {
-			return resp.Usage, apperr.Wrap(err2,
+			return apperr.Wrap(err2,
 				"The model's JSON response did not match the expected shape.",
 				"Retry the command. This is usually transient.").
 				WithCode(apperr.CodeMalformed)
 		}
 	}
-	return resp.Usage, nil
+	return nil
 }
 
 // extractJSONObject pulls the first balanced top-level JSON object out of a

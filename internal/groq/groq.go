@@ -226,7 +226,7 @@ func (c *Client) do(ctx context.Context, payload []byte, model string) (*Respons
 		return nil, true, apperr.Wrap(err, "Could not reach the Groq API.",
 			"Check your network connection and https://groqstatus.com.")
 	}
-	defer httpResp.Body.Close()
+	defer func() { _ = httpResp.Body.Close() }()
 
 	raw, err := io.ReadAll(io.LimitReader(httpResp.Body, 8<<20))
 	if err != nil {
