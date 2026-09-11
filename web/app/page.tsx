@@ -7,7 +7,6 @@ import { TypingTerminal } from "@/components/TypingTerminal";
 import { CommandExplorer } from "@/components/CommandExplorer";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { Workflow } from "@/components/Workflow";
-import { Playground } from "@/components/Playground";
 import { InstallBlock } from "@/components/InstallBlock";
 import { Architecture } from "@/components/Architecture";
 import { ShaderBackground } from "@/components/ShaderBackground";
@@ -130,16 +129,7 @@ export default function HomePage() {
           <Workflow />
         </Section>
 
-        {/* 6 · Playground */}
-        <Section
-          eyebrow="try it"
-          title="Playground"
-          intro="The CLI simulated in your browser, on the docs example data. Type help to start."
-        >
-          <Playground />
-        </Section>
-
-        {/* 7 · Install */}
+        {/* 6 · Install */}
         <Section
           id="install"
           eyebrow="install"
