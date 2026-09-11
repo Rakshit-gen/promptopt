@@ -5,118 +5,122 @@ import { useReducedMotion } from "framer-motion";
 import { TerminalChrome, TerminalLineView } from "./Terminal";
 import type { TerminalLine } from "@/lib/demo";
 
-// Plays a scripted terminal transcript: the command is "typed" character by
-// character, then the output prints line by line. A Run button replays it.
-// With prefers-reduced-motion, the whole transcript renders immediately.
+// Cycles through a list of scripted terminal runs, forever, on its own. Each
+// run types its command character by character, prints the output line by
+// line, holds, then the next run begins. The transcript area is a fixed
+// height, so the box never resizes as it moves between commands. Under
+// prefers-reduced-motion the first run is shown in full and the cycle is off.
 
-type Phase = "idle" | "typing" | "printing" | "done";
+type Phase = "typing" | "printing" | "hold";
 
-export function TypingTerminal({ script }: { script: TerminalLine[] }) {
+export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
   const reduce = useReducedMotion();
+  const [si, setSi] = useState(0);
   const [typed, setTyped] = useState("");
   const [visibleOutput, setVisibleOutput] = useState(0);
-  const [phase, setPhase] = useState<Phase>("idle");
+  const [phase, setPhase] = useState<Phase>("typing");
+
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
-
-  const commandLine = script.find((l) => l.kind === "input");
-  const command = commandLine && commandLine.kind === "input" ? commandLine.text : "";
-  const outputLines = script.filter((l) => l.kind !== "input");
-
-  const clearTimers = () => {
+  const clearTimers = useCallback(() => {
     timers.current.forEach(clearTimeout);
     timers.current = [];
-  };
+  }, []);
+  const after = useCallback((ms: number, fn: () => void) => {
+    timers.current.push(setTimeout(fn, ms));
+  }, []);
 
-  const showAll = useCallback(() => {
-    clearTimers();
-    setTyped(command);
-    setVisibleOutput(outputLines.length);
-    setPhase("done");
-  }, [command, outputLines.length]);
+  const script = scripts[si];
+  const commandLine = script.find((l) => l.kind === "input");
+  const command =
+    commandLine && commandLine.kind === "input" ? commandLine.text : "";
+  const outputLines = script.filter((l) => l.kind !== "input");
 
-  const run = useCallback(() => {
+  // Type the command for the current run.
+  useEffect(() => {
     clearTimers();
     setTyped("");
     setVisibleOutput(0);
     setPhase("typing");
+
+    if (reduce) {
+      setTyped(command);
+      setVisibleOutput(outputLines.length);
+      setPhase("hold");
+      return;
+    }
 
     let i = 0;
     const typeNext = () => {
       i += 1;
       setTyped(command.slice(0, i));
       if (i < command.length) {
-        timers.current.push(setTimeout(typeNext, 26 + Math.random() * 34));
+        after(24 + Math.random() * 34, typeNext);
       } else {
-        timers.current.push(setTimeout(() => setPhase("printing"), 320));
+        after(360, () => setPhase("printing"));
       }
     };
-    timers.current.push(setTimeout(typeNext, 240));
-  }, [command]);
+    after(260, typeNext);
 
-  // Print output lines once typing finishes.
+    return clearTimers;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [si, reduce]);
+
+  // Print the output, then advance to the next run.
   useEffect(() => {
-    if (phase !== "printing") return;
+    if (phase !== "printing" || reduce) return;
     let n = 0;
     const printNext = () => {
       n += 1;
       setVisibleOutput(n);
       if (n < outputLines.length) {
-        const delay = outputLines[n - 1]?.kind === "gap" ? 40 : 90;
-        timers.current.push(setTimeout(printNext, delay));
+        after(outputLines[n - 1]?.kind === "gap" ? 45 : 95, printNext);
       } else {
-        setPhase("done");
+        setPhase("hold");
+        after(2600, () => setSi((v) => (v + 1) % scripts.length));
       }
     };
-    timers.current.push(setTimeout(printNext, 120));
-    return clearTimers;
-  }, [phase, outputLines]);
-
-  // Autoplay on mount (once), or show everything if reduced motion.
-  useEffect(() => {
-    if (reduce) {
-      showAll();
-      return;
-    }
-    run();
+    after(140, printNext);
     return clearTimers;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const running = phase === "typing" || phase === "printing";
+  }, [phase, reduce]);
 
   return (
     <div>
       <TerminalChrome title="zsh — promptopt">
-        <div aria-live="polite">
+        <div
+          aria-live="polite"
+          className="h-[19rem] overflow-hidden sm:h-[20rem]"
+        >
           <div className="whitespace-pre-wrap break-words text-fg">
             <span className="select-none text-accent">$ </span>
             {typed}
-            {(phase === "typing" || phase === "idle") && (
+            {phase === "typing" && (
               <span className="ml-0.5 inline-block h-4 w-2 translate-y-0.5 bg-fg/70 align-baseline animate-blink" />
             )}
           </div>
           <div className="mt-1">
-            {outputLines.slice(0, visibleOutput).map((line, i) => (
-              <TerminalLineView key={i} line={line} />
+            {outputLines.map((line, i) => (
+              <div key={i} className={i < visibleOutput ? "" : "invisible"}>
+                <TerminalLineView line={line} />
+              </div>
             ))}
           </div>
         </div>
       </TerminalChrome>
 
       <div className="mt-3 flex items-center gap-3">
-        <button
-          type="button"
-          onClick={run}
-          disabled={running}
-          className="inline-flex items-center gap-1.5 rounded-md border border-borderStrong bg-raised px-2.5 py-1.5 font-mono text-2xs text-muted transition-colors hover:border-accent/50 hover:text-fg disabled:opacity-50"
-        >
-          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden>
-            <path d="M2.5 1.5L9 5.5L2.5 9.5V1.5Z" fill="currentColor" />
-          </svg>
-          {phase === "done" ? "Replay" : "Running…"}
-        </button>
-        <span className="font-mono text-2xs text-faint">
-          scripted demo — deterministic data, no API call
+        <div className="flex gap-1.5" aria-hidden>
+          {scripts.map((_, i) => (
+            <span
+              key={i}
+              className={`h-1 w-1 rounded-full transition-colors ${
+                i === si ? "bg-accent" : "bg-borderStrong"
+              }`}
+            />
+          ))}
+        </div>
+        <span className="ml-auto font-mono text-2xs text-faint">
+          scripted — no API call
         </span>
       </div>
     </div>

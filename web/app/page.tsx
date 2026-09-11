@@ -10,8 +10,9 @@ import { Workflow } from "@/components/Workflow";
 import { Playground } from "@/components/Playground";
 import { InstallBlock } from "@/components/InstallBlock";
 import { Architecture } from "@/components/Architecture";
+import { ShaderBackground } from "@/components/ShaderBackground";
 import { CopyButton } from "@/components/CopyButton";
-import { heroRun, devFacts } from "@/lib/demo";
+import { heroScripts, devFacts } from "@/lib/demo";
 import { site } from "@/lib/site";
 
 export default function HomePage() {
@@ -20,11 +21,16 @@ export default function HomePage() {
       <Nav />
       <main id="main">
         {/* 1 · Hero */}
-        <section className="relative overflow-hidden border-b border-border">
-          <div className="grid-bg pointer-events-none absolute inset-0 opacity-70" aria-hidden />
-          <div className="container-content relative grid gap-12 py-16 sm:py-24 lg:grid-cols-[1.05fr_1fr] lg:items-center">
+        <section className="relative overflow-hidden border-b border-border bg-bg">
+          <ShaderBackground />
+          <div className="grid-bg pointer-events-none absolute inset-0 opacity-40" aria-hidden />
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-bg"
+            aria-hidden
+          />
+          <div className="container-content relative grid gap-12 py-16 sm:py-24 lg:grid-cols-[1.05fr_1fr] lg:items-start">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-panel px-3 py-1 font-mono text-2xs text-muted">
+              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-panel/80 px-3 py-1 font-mono text-2xs text-muted backdrop-blur">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent" />
                 open source · MIT · inference on Groq
               </div>
@@ -33,10 +39,9 @@ export default function HomePage() {
                 <br />
                 from the terminal.
               </h1>
-              <p className="mt-5 max-w-xl text-pretty text-base text-muted sm:text-lg">
-                promptopt analyzes, optimizes, compresses, expands, transforms,
-                and evaluates the prompts you send to language models. You
-                describe the work; it handles the prompt-engineering mechanics.
+              <p className="mt-5 max-w-md text-pretty text-base text-muted sm:text-lg">
+                Analyze, optimize, compress, expand, transform, and evaluate the
+                prompts you send to language models.
               </p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <a
@@ -52,7 +57,7 @@ export default function HomePage() {
                   Read docs
                 </Link>
               </div>
-              <div className="mt-6 flex items-center gap-3 rounded-md border border-border bg-panel px-3 py-2 font-mono text-2xs sm:text-xs">
+              <div className="mt-6 flex items-center gap-3 rounded-md border border-border bg-panel/80 px-3 py-2 font-mono text-2xs backdrop-blur sm:text-xs">
                 <code className="truncate text-fg">
                   <span className="text-accent">$ </span>
                   {site.installCommand}
@@ -62,7 +67,7 @@ export default function HomePage() {
             </div>
 
             <Reveal delay={0.1}>
-              <TypingTerminal script={heroRun} />
+              <TypingTerminal scripts={heroScripts} />
             </Reveal>
           </div>
         </section>
@@ -72,21 +77,21 @@ export default function HomePage() {
           id="product"
           eyebrow="what it is"
           title="A linter and a rewriter for prompts"
-          intro="Prompts drift. They accumulate instructions, pick up contradictions, repeat themselves, and lose the plot on output format. promptopt is the tool you run to find that and fix it — one binary, no project setup."
+          intro="Prompts drift — they pick up contradictions, repeat themselves, lose the plot on output format. promptopt finds that and fixes it."
         >
           <div className="grid gap-4 sm:grid-cols-3">
             {[
               {
-                h: "See where a prompt is wasting tokens",
-                p: "analyze scores efficiency and points at the exact repeated constraint or inert persona line.",
+                h: "Find wasted tokens",
+                p: "analyze scores efficiency and points at the repeated constraint or inert persona line.",
               },
               {
-                h: "Compress without throwing away constraints",
-                p: "compress reduces a 3,000-token system prompt and reports its confidence that behavior held.",
+                h: "Compress, keeping constraints",
+                p: "compress cuts a long system prompt and reports its confidence that behavior held.",
               },
               {
-                h: "Pipe the result into another command",
-                p: "Every command reads stdin, writes JSON, and returns stable exit codes. It composes like a Unix tool.",
+                h: "Compose like a Unix tool",
+                p: "Every command reads stdin, writes JSON, and returns stable exit codes.",
               },
             ].map((c, i) => (
               <Reveal key={c.h} delay={i * 0.06} className="rounded-lg border border-border bg-panel p-5">
@@ -102,7 +107,7 @@ export default function HomePage() {
           id="commands"
           eyebrow="six commands"
           title="One for each job"
-          intro="These six are the whole public surface. Smaller transformations — clarify, dedupe, reorder, systemize — are chosen internally. Pick a command to see its input and output."
+          intro="The whole public surface. Pick one to see its input and output."
         >
           <CommandExplorer />
         </Section>
@@ -111,7 +116,7 @@ export default function HomePage() {
         <Section
           eyebrow="optimize, concretely"
           title="Same intent, less noise"
-          intro="A real support-assistant prompt before and after optimize. Toggle to compare. The token count drops because the repetition goes, not because instructions do."
+          intro="A support-assistant prompt before and after optimize. Toggle to compare."
         >
           <BeforeAfter />
         </Section>
@@ -120,7 +125,7 @@ export default function HomePage() {
         <Section
           eyebrow="a workflow"
           title="From a rough prompt to one you can depend on"
-          intro="You do not have to run all of these. But this is the path most prompts take through promptopt."
+          intro="The path most prompts take through promptopt. You don't have to run every step."
         >
           <Workflow />
         </Section>
@@ -129,7 +134,7 @@ export default function HomePage() {
         <Section
           eyebrow="try it"
           title="Playground"
-          intro="A simulation of the CLI, running entirely in your browser on the same example data as the docs. Type help to start."
+          intro="The CLI simulated in your browser, on the docs example data. Type help to start."
         >
           <Playground />
         </Section>
@@ -139,29 +144,17 @@ export default function HomePage() {
           id="install"
           eyebrow="install"
           title="One command, no dependencies"
-          intro="macOS and Linux, amd64 and arm64. The installer detects your platform, verifies the checksum, and drops a single binary into ~/.local/bin."
+          intro="macOS and Linux, amd64 and arm64. Detects your platform, verifies the checksum, installs a single binary to ~/.local/bin."
         >
           <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
             <InstallBlock />
             <div className="space-y-4 text-sm text-muted">
               <p>
-                Prefer a package manager? <code className="text-fg">go install</code>{" "}
-                works today; a Homebrew tap ships with the first tagged release.
+                <code className="text-fg">go install</code> works today; a
+                Homebrew tap ships with the first tagged release.
               </p>
               <p>
-                Every{" "}
-                <a
-                  href={`${site.repo}/releases`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-accent hover:underline"
-                >
-                  release
-                </a>{" "}
-                attaches prebuilt binaries and a <code className="text-fg">checksums.txt</code>.
-              </p>
-              <p>
-                You will need a Groq API key. Create one at{" "}
+                You need a Groq API key from{" "}
                 <a
                   href="https://console.groq.com/keys"
                   target="_blank"
@@ -181,7 +174,7 @@ export default function HomePage() {
           id="architecture"
           eyebrow="how it is built"
           title="A thin CLI over a testable engine"
-          intro="The command layer parses input and picks an output format. Everything below it has no idea the CLI exists."
+          intro="The command layer parses input and picks a format. Everything below it has no idea the CLI exists."
         >
           <Architecture />
         </Section>
@@ -208,8 +201,8 @@ export default function HomePage() {
               Install promptopt
             </h2>
             <p className="mx-auto mt-3 max-w-md text-[0.95rem] text-muted">
-              A single binary, an API key, and your prompts get the same
-              scrutiny as your code.
+              One binary, one API key. Your prompts get the same scrutiny as
+              your code.
             </p>
             <div className="mx-auto mt-6 flex max-w-lg items-center gap-3 rounded-md border border-border bg-panel px-3 py-2.5 font-mono text-xs">
               <code className="truncate text-fg">

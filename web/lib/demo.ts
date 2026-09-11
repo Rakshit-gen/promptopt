@@ -11,29 +11,6 @@ export type TerminalLine =
   | { kind: "output"; text: string; tone?: "dim" | "ok" | "warn" | "err" | "accent" }
   | { kind: "gap" };
 
-/** The scripted run shown in the hero. */
-export const heroRun: TerminalLine[] = [
-  { kind: "input", text: "promptopt compress system-prompt.md" },
-  { kind: "gap" },
-  { kind: "output", text: "  promptopt  compress", tone: "accent" },
-  { kind: "gap" },
-  { kind: "output", text: "  reading system-prompt.md", tone: "dim" },
-  { kind: "output", text: "  finding redundant instructions", tone: "dim" },
-  { kind: "output", text: "  checking semantic preservation", tone: "dim" },
-  { kind: "gap" },
-  { kind: "output", text: "  tokens  (estimate)" },
-  { kind: "output", text: "  2,431 → 1,487" },
-  { kind: "output", text: "  38.8% reduction", tone: "ok" },
-  { kind: "gap" },
-  { kind: "output", text: "  changes" },
-  { kind: "output", text: "  + removed a constraint stated three times", tone: "ok" },
-  { kind: "output", text: "  + collapsed two near-identical examples into one", tone: "ok" },
-  { kind: "output", text: "  + cut a paragraph explaining what JSON is", tone: "ok" },
-  { kind: "gap" },
-  { kind: "output", text: "  semantic preservation   8.4 / 10", tone: "ok" },
-  { kind: "output", text: "  behavior risks          none reported", tone: "dim" },
-];
-
 export type CommandDemo = {
   name: CommandName;
   summary: string;
@@ -42,6 +19,90 @@ export type CommandDemo = {
   command: string;
   output: TerminalLine[];
 };
+
+// The hero terminal cycles through these short scripted runs, one per command,
+// forever. Kept compact and uniform in length so the terminal never resizes.
+export const heroScripts: TerminalLine[][] = [
+  [
+    { kind: "input", text: "promptopt compress system-prompt.md" },
+    { kind: "gap" },
+    { kind: "output", text: "  promptopt  compress", tone: "accent" },
+    { kind: "gap" },
+    { kind: "output", text: "  tokens  (estimate)" },
+    { kind: "output", text: "  2,431 → 1,487" },
+    { kind: "output", text: "  38.8% reduction", tone: "ok" },
+    { kind: "gap" },
+    { kind: "output", text: "  + removed a constraint stated three times", tone: "ok" },
+    { kind: "output", text: "  + collapsed two near-identical examples", tone: "ok" },
+    { kind: "gap" },
+    { kind: "output", text: "  semantic preservation   8.4 / 10", tone: "ok" },
+  ],
+  [
+    { kind: "input", text: "promptopt analyze prompt.txt" },
+    { kind: "gap" },
+    { kind: "output", text: "  promptopt  analyze", tone: "accent" },
+    { kind: "gap" },
+    { kind: "output", text: "  overall score  4.6 / 10", tone: "warn" },
+    { kind: "gap" },
+    { kind: "output", text: "  findings  1 error, 2 warning" },
+    { kind: "gap" },
+    { kind: "output", text: "  ERROR   P004  'be thorough' vs 'keep it brief'", tone: "err" },
+    { kind: "output", text: "  WARNING P002  the code to review is not included", tone: "warn" },
+    { kind: "output", text: "  WARNING P003  no output format is defined", tone: "warn" },
+  ],
+  [
+    { kind: "input", text: "promptopt optimize prompt.txt" },
+    { kind: "gap" },
+    { kind: "output", text: "  promptopt  optimize", tone: "accent" },
+    { kind: "gap" },
+    { kind: "output", text: "  tokens  46 → 92  (estimate)" },
+    { kind: "gap" },
+    { kind: "output", text: "  + removed four repeated 'be helpful' lines", tone: "ok" },
+    { kind: "output", text: "  + defined the role as a programming assistant", tone: "ok" },
+    { kind: "output", text: "  + added a rule for ambiguous requests", tone: "ok" },
+    { kind: "gap" },
+    { kind: "output", text: "  ! result is longer; run compress if it matters", tone: "warn" },
+  ],
+  [
+    { kind: "input", text: 'promptopt expand "build a payment API" --depth production' },
+    { kind: "gap" },
+    { kind: "output", text: "  promptopt  expand · production", tone: "accent" },
+    { kind: "gap" },
+    { kind: "output", text: "  tokens  4 → 486  (estimate)" },
+    { kind: "gap" },
+    { kind: "output", text: "  + explicit objective and non-goals", tone: "ok" },
+    { kind: "output", text: "  + request and response contracts", tone: "ok" },
+    { kind: "output", text: "  + idempotency and retry behavior", tone: "ok" },
+    { kind: "gap" },
+    { kind: "output", text: "  ~ assumes a Stripe-style PaymentIntent model", tone: "warn" },
+  ],
+  [
+    { kind: "input", text: "promptopt transform prompt.txt --to template" },
+    { kind: "gap" },
+    { kind: "output", text: "  promptopt  transform → template", tone: "accent" },
+    { kind: "gap" },
+    { kind: "output", text: "  · parameterized the language and the issue", tone: "dim" },
+    { kind: "output", text: "  · left 'review' as a literal instruction", tone: "dim" },
+    { kind: "gap" },
+    { kind: "output", text: "  variables  (3)" },
+    { kind: "output", text: "  {{language}}  {{security_issue}}  {{code}}", tone: "accent" },
+    { kind: "gap" },
+    { kind: "output", text: "  template written to prompt.tmpl", tone: "ok" },
+  ],
+  [
+    { kind: "input", text: "promptopt eval prompt.txt" },
+    { kind: "gap" },
+    { kind: "output", text: "  promptopt  eval", tone: "accent" },
+    { kind: "gap" },
+    { kind: "output", text: "  overall  7.4 / 10", tone: "warn" },
+    { kind: "gap" },
+    { kind: "output", text: "  test cases  2/3 handled well" },
+    { kind: "gap" },
+    { kind: "output", text: "  ✓ normal message      tight three-bullet summary", tone: "ok" },
+    { kind: "output", text: "  ✗ injection in body   may follow 'ignore the above'", tone: "err" },
+    { kind: "output", text: "  ! input is treated as instructions, not data", tone: "warn" },
+  ],
+];
 
 export const commandDemos: Record<CommandName, CommandDemo> = {
   optimize: {
@@ -296,7 +357,7 @@ export const architecture = [
 export const devFacts = [
   {
     title: "Reads from stdin",
-    body: "cat prompt.txt | promptopt analyze. Every command takes piped input.",
+    body: "cat prompt.txt | promptopt analyze — every command takes piped input.",
   },
   {
     title: "Reads files",
@@ -304,15 +365,15 @@ export const devFacts = [
   },
   {
     title: "JSON output",
-    body: "--json gives a single stable object, documented field by field. No color, no prose.",
+    body: "--json gives one stable object, documented field by field. No color, no prose.",
   },
   {
     title: "Shell composable",
-    body: "promptopt optimize -q | promptopt compress -q > final.txt. Exit codes are stable.",
+    body: "promptopt optimize -q | promptopt compress -q > final.txt. Stable exit codes.",
   },
   {
     title: "Configurable models",
-    body: "--model, PROMPTOPT_MODEL, or the config file. Default is a current Groq model.",
+    body: "--model, PROMPTOPT_MODEL, or the config file.",
   },
   {
     title: "No telemetry",
@@ -324,6 +385,6 @@ export const devFacts = [
   },
   {
     title: "Groq inference",
-    body: "Fast enough that running analyze in a pre-commit hook is not annoying.",
+    body: "Fast enough to run analyze in a pre-commit hook.",
   },
 ] as const;
