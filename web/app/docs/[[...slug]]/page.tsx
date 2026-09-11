@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { docSlugs, getDoc } from "@/lib/docs";
-import { site } from "@/lib/site";
 import { Markdown } from "@/components/docs/Markdown";
 import { Toc } from "@/components/docs/Toc";
 import { Breadcrumbs } from "@/components/docs/Breadcrumbs";
@@ -20,8 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const doc = getDoc(slug);
   if (!doc) return {};
 
-  const url =
-    doc.meta.slug === "" ? `${site.url}/docs` : `${site.url}/docs/${doc.meta.slug}`;
+  const url = doc.meta.slug === "" ? "/docs" : `/docs/${doc.meta.slug}`;
   const title = doc.meta.title;
   const description = doc.meta.description;
 
