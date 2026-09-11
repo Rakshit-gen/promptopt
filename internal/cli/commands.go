@@ -68,9 +68,9 @@ func newOptimizeCmd() *cobra.Command {
 		Use:   "optimize [prompt|file|-]",
 		Short: "Inspect a prompt and rewrite it to be clearer and tighter",
 		Long: `optimize reads a prompt, checks it for the problems that make language
-models unreliable — unclear objective, missing context, ambiguous wording,
+models unreliable: unclear objective, missing context, ambiguous wording,
 repeated or conflicting instructions, bad ordering, no stated output format,
-dead weight — and returns a rewritten version.
+dead weight, and returns a rewritten version.
 
 It preserves intent. optimize will not add domain requirements the prompt
 did not state; that is what expand is for. If the prompt is already good it
@@ -236,7 +236,7 @@ for. Targets:
   agent      a goal, available context, and explicit stopping conditions
 
 For template, transform parameterizes the values that would realistically
-vary — inputs, target languages, file names — not every noun.`,
+vary: inputs, target languages, file names, not every noun.`,
 		Example: `  promptopt transform prompt.txt --to xml
   promptopt transform prompt.txt --to template
   promptopt transform prompt.txt --to system -o system.txt
@@ -276,8 +276,8 @@ func newEvalCmd() *cobra.Command {
 		Short: "Assess a prompt and probe it with generated test cases",
 		Long: `eval gives you a read on whether a prompt is ready to depend on. It scores
 clarity, consistency, robustness, and output control, then generates test
-cases that probe the prompt's weak points — a normal input, an ambiguous
-one, an out-of-scope or adversarial one, and an edge case — and reports how
+cases that probe the prompt's weak points: a normal input, an ambiguous
+one, an out-of-scope or adversarial one, and an edge case, and reports how
 the prompt would handle each.
 
 This is a foundation, not a full benchmark platform. The result shape is

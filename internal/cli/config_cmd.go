@@ -16,7 +16,7 @@ func newConfigCmd() *cobra.Command {
 		Use:   "config",
 		Short: "Inspect and initialize promptopt configuration",
 		Long: `config helps you see what promptopt would use for a run and set up a config
-file. The API key is never printed — only whether one was found and where.`,
+file. The API key is never printed, only whether one was found and where.`,
 	}
 	cmd.AddCommand(newConfigShowCmd(), newConfigPathCmd(), newConfigInitCmd())
 	return cmd
