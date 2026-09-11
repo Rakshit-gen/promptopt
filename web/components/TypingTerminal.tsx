@@ -151,24 +151,19 @@ export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
         </div>
       </TerminalChrome>
 
-      <div className="mt-3 flex items-center gap-3">
-        <div className="flex flex-1 gap-1" aria-hidden>
-          {scripts.map((_, i) => (
+      <div className="mt-3 flex gap-1" aria-hidden>
+        {scripts.map((_, i) => (
+          <span
+            key={i}
+            className="h-0.5 flex-1 overflow-hidden rounded-full bg-borderStrong"
+          >
             <span
-              key={i}
-              className="h-0.5 flex-1 overflow-hidden rounded-full bg-borderStrong"
-            >
-              <span
-                className={`block h-full bg-accent transition-[width] duration-300 ${
-                  i < si ? "w-full" : i === si ? "w-1/3" : "w-0"
-                }`}
-              />
-            </span>
-          ))}
-        </div>
-        <span className="font-mono text-2xs text-faint">
-          {paused ? "paused" : "scripted — no API call"}
-        </span>
+              className={`block h-full bg-accent transition-[width] duration-300 ${
+                i < si ? "w-full" : i === si ? "w-1/3" : "w-0"
+              }`}
+            />
+          </span>
+        ))}
       </div>
     </div>
   );
