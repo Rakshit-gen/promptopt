@@ -71,7 +71,7 @@ main() {
 	trap 'rm -rf "$tmp"' EXIT
 
 	info "downloading ${archive} (${tag})"
-	fetch "${base}/${archive}" "${tmp}/${archive}" || die "download failed: ${base}/${archive}"
+	progress_fetch "${base}/${archive}" "${tmp}/${archive}" || die "download failed: ${base}/${archive}"
 
 	if fetch "${base}/checksums.txt" "${tmp}/checksums.txt" 2>/dev/null; then
 		verify_checksum "$tmp" "$archive"
@@ -107,6 +107,64 @@ fetch() {
 	else
 		wget -q "$1" -O "$2"
 	fi
+}
+
+human_size() {
+	awk -v n="$1" 'BEGIN{
+		split("B K M G", u, " ")
+		i = 1
+		while (n >= 1024 && i < 4) { n /= 1024; i++ }
+		printf (i == 1) ? "%d%s" : "%.1f%s", n, u[i]
+	}'
+}
+
+# Downloads URL to DEST with a cat running along a progress bar, driven by
+# the growing file size against Content-Length (falls back to a bouncing
+# cat and a byte count if the server doesn't report one). Redraws with \r,
+# so it only runs when stderr is a real terminal; piped/redirected output
+# (CI logs, `install.sh > log`) gets the plain, quiet fetch() instead.
+progress_fetch() {
+	url="$1"; dest="$2"
+	if [ ! -t 2 ]; then
+		fetch "$url" "$dest"
+		return $?
+	fi
+
+	width=20
+	total="$(curl -fsSIL "$url" 2>/dev/null | tr -d '\r' | sed -n 's/^[Cc]ontent-[Ll]ength: *//p' | tail -n1)"
+	case "$total" in '' | *[!0-9]*) total="" ;; esac
+
+	: >"$dest"
+	fetch "$url" "$dest" &
+	cpid=$!
+
+	bpos=0; bdir=1
+	while kill -0 "$cpid" 2>/dev/null; do
+		have="$(wc -c <"$dest" 2>/dev/null | tr -d ' ')"
+		[ -n "$have" ] || have=0
+		if [ -n "$total" ] && [ "$total" -gt 0 ]; then
+			pct=$((have * 100 / total))
+			[ "$pct" -gt 100 ] && pct=100
+			bpos=$((pct * (width - 1) / 100))
+			label="$(printf '%3d%%' "$pct")"
+		else
+			bpos=$((bpos + bdir))
+			[ "$bpos" -ge $((width - 1)) ] && bdir=-1
+			[ "$bpos" -le 0 ] && bdir=1
+			label="$(human_size "$have")"
+		fi
+		i=0; bar=""
+		while [ "$i" -lt "$width" ]; do
+			[ "$i" -eq "$bpos" ] && bar="${bar}🐱" || bar="${bar}-"
+			i=$((i + 1))
+		done
+		printf '\r  [%s] %s ' "$bar" "$label"
+		sleep 0.12
+	done
+	wait "$cpid"
+	rc=$?
+	printf '\r%*s\r' 40 ""
+	return $rc
 }
 
 verify_checksum() {

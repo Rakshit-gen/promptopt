@@ -73,7 +73,6 @@ type Theme struct {
 	Info    lipgloss.Style
 	Good    lipgloss.Style
 	Number  lipgloss.Style
-	Box     lipgloss.Style
 }
 
 func newTheme(color bool) Theme {
@@ -97,10 +96,6 @@ func newTheme(color bool) Theme {
 		Info:    lipgloss.NewStyle().Foreground(dim),
 		Good:    lipgloss.NewStyle().Foreground(green),
 		Number:  lipgloss.NewStyle().Bold(true),
-		Box: lipgloss.NewStyle().
-			Border(lipgloss.RoundedBorder()).
-			BorderForeground(dim).
-			Padding(0, 1),
 	}
 }
 

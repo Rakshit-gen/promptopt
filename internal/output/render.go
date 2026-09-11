@@ -51,13 +51,16 @@ func (w *Writer) warnings(ws []string) {
 	w.nl()
 }
 
+// promptBox prints the title as a heading and the body as plain text, with
+// nothing else on those lines, so selecting the body and pasting it
+// elsewhere reproduces it exactly. It used to sit inside a bordered box,
+// which looked nicer on screen but meant every copy-paste picked up the
+// border characters too, and the border broke across lines wider than the
+// terminal.
 func (w *Writer) promptBox(title, body string) {
 	w.line("  " + w.theme.Heading.Render(title))
 	w.nl()
-	rendered := w.theme.Box.Render(strings.TrimRight(body, "\n"))
-	for _, ln := range strings.Split(rendered, "\n") {
-		w.line("  " + ln)
-	}
+	w.line(strings.TrimRight(body, "\n"))
 	w.nl()
 }
 
