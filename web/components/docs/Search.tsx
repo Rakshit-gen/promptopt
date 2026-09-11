@@ -76,7 +76,7 @@ export function Search({ docs }: { docs: SearchDoc[] }) {
 
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-start justify-center bg-bg/70 p-4 pt-[12vh] backdrop-blur-sm"
+          className="fixed inset-0 z-50 isolate flex items-start justify-center bg-black/80 p-4 pt-[12vh] backdrop-blur"
           onClick={() => setOpen(false)}
           role="presentation"
         >
