@@ -9,22 +9,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Surfaces, darkest to lightest.
-        bg: "#0a0b0d",
-        panel: "#101216",
-        raised: "#15181e",
-        border: "#22262e",
-        borderStrong: "#2f343d",
+        // Surfaces, darkest to lightest. Warm near-black, not blue-black —
+        // pairs with the amber accent instead of fighting it.
+        bg: "#0b0a09",
+        panel: "#131110",
+        raised: "#1a1714",
+        border: "#2a2521",
+        borderStrong: "#3a332c",
         // Text.
-        fg: "#e6e8ec",
-        muted: "#9aa1ac",
-        faint: "#6b727d",
+        fg: "#f2ede6",
+        muted: "#a89b8c",
+        faint: "#6f6459",
         // One accent. Used sparingly.
-        accent: "#5eead4",
-        accentDim: "#2dd4bf",
+        accent: "#f5a524",
+        accentDim: "#c9820f",
         // Semantic.
         ok: "#4ade80",
-        warn: "#fbbf24",
+        warn: "#eab308",
         err: "#f87171",
       },
       fontFamily: {
