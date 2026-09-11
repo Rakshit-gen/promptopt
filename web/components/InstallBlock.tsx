@@ -32,7 +32,7 @@ export function InstallBlock() {
   const [tab, setTab] = useState<Tab>("macOS");
 
   return (
-    <div className="rounded-xl border border-border bg-panel">
+    <div className="min-w-0 rounded-xl border border-border bg-panel">
       <div className="flex items-center justify-between border-b border-border px-3 py-2">
         <div className="flex gap-1" role="tablist" aria-label="Install method">
           {(Object.keys(tabs) as Tab[]).map((t) => (

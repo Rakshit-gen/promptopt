@@ -18,7 +18,7 @@ export function BeforeAfter() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-      <div className="rounded-xl border border-border bg-panel">
+      <div className="min-w-0 rounded-xl border border-border bg-panel">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3">
           <div
             className="inline-flex rounded-md border border-border p-0.5"
