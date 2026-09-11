@@ -83,7 +83,7 @@ export function Search({ docs }: { docs: SearchDoc[] }) {
             role="presentation"
           >
             <div
-              className="w-full max-w-lg overflow-hidden rounded-xl border border-borderStrong bg-panel shadow-2xl"
+              className="w-full max-w-lg overflow-hidden rounded-xl border border-borderStrong bg-panel shadow-2xl z-50"
               onClick={(e) => e.stopPropagation()}
               role="dialog"
               aria-modal="true"
