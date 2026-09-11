@@ -38,7 +38,7 @@ export function CodeBlock({
         type="button"
         onClick={copy}
         aria-label={copied ? "Copied" : "Copy code"}
-        className="absolute right-2 top-2 z-10 rounded border border-border bg-raised px-1.5 py-1 font-mono text-2xs text-muted opacity-0 transition-opacity hover:text-fg focus-visible:opacity-100 group-hover:opacity-100"
+        className="absolute right-2 top-2 z-10 rounded border border-border bg-raised px-1.5 py-1 font-mono text-2xs text-muted opacity-100 transition-opacity hover:text-fg sm:opacity-0 sm:focus-visible:opacity-100 sm:group-hover:opacity-100"
       >
         {copied ? "copied" : "copy"}
       </button>
