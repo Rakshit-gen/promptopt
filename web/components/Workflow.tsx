@@ -28,12 +28,12 @@ export function Workflow() {
 
   return (
     <div onMouseLeave={() => setHeld(false)}>
-      <ol className="flex flex-wrap items-center gap-y-3">
+      <ol className="flex flex-nowrap items-center overflow-x-auto pb-1">
         {workflow.map((s, i) => {
           const on = i === active;
           const done = i < active;
           return (
-            <li key={s.label} className="flex items-center">
+            <li key={s.label} className="flex shrink-0 items-center">
               <button
                 type="button"
                 onMouseEnter={() => {
