@@ -50,34 +50,38 @@ export function CommandExplorer() {
             exit={reduce ? undefined : { opacity: 0, y: -8 }}
             transition={{ duration: 0.22 }}
           >
-            <p className="text-[0.95rem] text-fg/90">{demo.summary}</p>
-            <p className="mt-2 text-sm text-muted">
-              <span className="text-faint">When: </span>
-              {demo.when}
-            </p>
+            <div className="min-h-[4.5rem] sm:min-h-[4rem]">
+              <p className="text-[0.95rem] text-fg/90">{demo.summary}</p>
+              <p className="mt-2 text-sm text-muted">
+                <span className="text-faint">When: </span>
+                {demo.when}
+              </p>
+            </div>
 
             <div className="mt-4 grid gap-4 lg:grid-cols-2">
-              <div className="rounded-lg border border-border bg-panel">
+              <div className="flex flex-col overflow-hidden rounded-lg border border-border bg-panel">
                 <div className="flex items-center justify-between border-b border-border px-3 py-2">
                   <span className="font-mono text-2xs text-faint">
                     input · {demo.input.label}
                   </span>
                 </div>
-                <pre className="overflow-x-auto p-3 font-mono text-[0.78rem] leading-6 text-fg/80">
+                <pre className="h-64 overflow-auto p-3 font-mono text-[0.78rem] leading-6 text-fg/80">
                   {demo.input.body}
                 </pre>
               </div>
 
               <div className="flex flex-col gap-2">
-                <div className="flex items-center justify-between rounded-lg border border-border bg-raised px-3 py-2">
-                  <code className="font-mono text-[0.78rem] text-fg">
+                <div className="flex min-h-[2.75rem] items-center justify-between gap-2 rounded-lg border border-border bg-raised px-3 py-2">
+                  <code className="break-all font-mono text-[0.78rem] text-fg">
                     <span className="text-accent">$ </span>
                     {demo.command}
                   </code>
-                  <CopyButton value={demo.command} label="" />
+                  <CopyButton value={demo.command} label="" className="shrink-0" />
                 </div>
                 <TerminalChrome title="output">
-                  <TerminalTranscript lines={demo.output} />
+                  <div className="h-64 overflow-y-auto">
+                    <TerminalTranscript lines={demo.output} />
+                  </div>
                 </TerminalChrome>
               </div>
             </div>
