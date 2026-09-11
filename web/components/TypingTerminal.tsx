@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { TerminalChrome, TerminalLineView } from "./Terminal";
 import type { TerminalLine } from "@/lib/demo";
@@ -9,7 +9,12 @@ import type { TerminalLine } from "@/lib/demo";
 // run types its command character by character, prints the output line by
 // line, holds, then the next run begins. The transcript area is a fixed
 // height, so the box never resizes as it moves between commands. Under
-// prefers-reduced-motion the first run is shown in full and the cycle is off.
+// prefers-reduced-motion the first run shows in full and the cycle is off.
+//
+// The two effects each own their own timer list and clear only their own on
+// cleanup — a shared bucket let the print effect's cleanup cancel the typing
+// effect's freshly-scheduled timer when the phase flipped back, which stalled
+// every run after the first.
 
 type Phase = "typing" | "printing";
 
@@ -20,15 +25,6 @@ export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
   const [visibleOutput, setVisibleOutput] = useState(0);
   const [phase, setPhase] = useState<Phase>("typing");
 
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
-  const clearTimers = useCallback(() => {
-    timers.current.forEach(clearTimeout);
-    timers.current = [];
-  }, []);
-  const after = useCallback((ms: number, fn: () => void) => {
-    timers.current.push(setTimeout(fn, ms));
-  }, []);
-
   const script = scripts[si];
   const commandLine = script.find((l) => l.kind === "input");
   const command =
@@ -37,7 +33,6 @@ export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
 
   // Type the command for the current run.
   useEffect(() => {
-    clearTimers();
     setTyped("");
     setVisibleOutput(0);
     setPhase("typing");
@@ -48,40 +43,42 @@ export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
       return;
     }
 
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    const at = (ms: number, fn: () => void) => timers.push(setTimeout(fn, ms));
+
     let i = 0;
     const typeNext = () => {
       i += 1;
       setTyped(command.slice(0, i));
-      if (i < command.length) {
-        after(24 + Math.random() * 34, typeNext);
-      } else {
-        after(360, () => setPhase("printing"));
-      }
+      if (i < command.length) at(24 + Math.random() * 34, typeNext);
+      else at(360, () => setPhase("printing"));
     };
-    after(260, typeNext);
+    at(260, typeNext);
 
-    return clearTimers;
+    return () => timers.forEach(clearTimeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [si, reduce]);
 
-  // Print the output, then, after a hold, advance to the next run. The advance
-  // timer must not be scheduled via a state change that re-runs this effect,
-  // or its own cleanup would cancel it — so phase stays "printing" and the
-  // typing effect (keyed on `si`) resets everything when the index changes.
+  // Print the output, hold, then advance to the next run.
   useEffect(() => {
     if (phase !== "printing" || reduce) return;
+
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    const at = (ms: number, fn: () => void) => timers.push(setTimeout(fn, ms));
+
     let n = 0;
     const printNext = () => {
       n += 1;
       setVisibleOutput(n);
       if (n < outputLines.length) {
-        after(outputLines[n - 1]?.kind === "gap" ? 45 : 95, printNext);
+        at(outputLines[n - 1]?.kind === "gap" ? 45 : 95, printNext);
       } else {
-        after(2600, () => setSi((v) => (v + 1) % scripts.length));
+        at(2600, () => setSi((v) => (v + 1) % scripts.length));
       }
     };
-    after(140, printNext);
-    return clearTimers;
+    at(140, printNext);
+
+    return () => timers.forEach(clearTimeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, reduce]);
 
@@ -90,7 +87,7 @@ export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
       <TerminalChrome title="zsh — promptopt">
         <div
           aria-live="polite"
-          className="h-[19rem] overflow-hidden sm:h-[20rem]"
+          className="h-[16.5rem] overflow-hidden sm:h-[17rem]"
         >
           <div className="whitespace-pre-wrap break-words text-fg">
             <span className="select-none text-accent">$ </span>

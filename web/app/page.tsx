@@ -20,20 +20,16 @@ export default function HomePage() {
       <Nav />
       <main id="main">
         {/* 1 · Hero */}
-        <section className="relative overflow-hidden border-b border-border bg-bg">
+        <section className="relative flex min-h-[calc(100svh-3.5rem)] items-center overflow-hidden border-b border-border bg-bg">
           <ShaderBackground />
           <div className="grid-bg pointer-events-none absolute inset-0 opacity-40" aria-hidden />
           <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-bg"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-bg"
             aria-hidden
           />
-          <div className="container-content relative grid gap-12 py-16 sm:py-24 lg:grid-cols-[1.05fr_1fr] lg:items-start">
+          <div className="container-content relative grid w-full gap-12 py-16 lg:grid-cols-[1.05fr_1fr] lg:items-center">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-panel/80 px-3 py-1 font-mono text-2xs text-muted backdrop-blur">
-                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-                open source · MIT · inference on Groq
-              </div>
-              <h1 className="mt-5 text-balance text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl">
+              <h1 className="text-balance text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl">
                 Work on your prompts
                 <br />
                 from the terminal.
@@ -76,25 +72,34 @@ export default function HomePage() {
           id="product"
           eyebrow="what it is"
           title="A linter and a rewriter for prompts"
-          intro="Prompts drift — they pick up contradictions, repeat themselves, lose the plot on output format. promptopt finds that and fixes it."
+          intro="Prompts drift. This is what you run to catch it."
         >
           <div className="grid gap-4 sm:grid-cols-3">
             {[
               {
                 h: "Find wasted tokens",
-                p: "analyze scores efficiency and points at the repeated constraint or inert persona line.",
+                p: "analyze points at the repeated constraint or the inert persona line.",
               },
               {
-                h: "Compress, keeping constraints",
-                p: "compress cuts a long system prompt and reports its confidence that behavior held.",
+                h: "Compress, keep constraints",
+                p: "compress cuts a long system prompt and rates its confidence that behavior held.",
               },
               {
                 h: "Compose like a Unix tool",
-                p: "Every command reads stdin, writes JSON, and returns stable exit codes.",
+                p: "stdin in, JSON out, stable exit codes.",
               },
             ].map((c, i) => (
-              <Reveal key={c.h} delay={i * 0.06} className="rounded-lg border border-border bg-panel p-5">
-                <h3 className="text-sm font-medium text-fg">{c.h}</h3>
+              <Reveal
+                key={c.h}
+                delay={i * 0.07}
+                className="group rounded-lg border border-border bg-panel p-5 transition-colors hover:border-borderStrong"
+              >
+                <h3 className="text-sm font-medium text-fg">
+                  <span className="text-accent transition-[margin] group-hover:mr-1">
+                    →
+                  </span>{" "}
+                  {c.h}
+                </h3>
                 <p className="mt-2 text-sm text-muted">{c.p}</p>
               </Reveal>
             ))}
@@ -106,7 +111,7 @@ export default function HomePage() {
           id="commands"
           eyebrow="six commands"
           title="One for each job"
-          intro="The whole public surface. Pick one to see its input and output."
+          intro="The whole public surface. Pick one."
         >
           <CommandExplorer />
         </Section>
@@ -115,7 +120,7 @@ export default function HomePage() {
         <Section
           eyebrow="optimize, concretely"
           title="Same intent, less noise"
-          intro="A support-assistant prompt before and after optimize. Toggle to compare."
+          intro="Toggle to compare."
         >
           <BeforeAfter />
         </Section>
@@ -123,8 +128,7 @@ export default function HomePage() {
         {/* 5 · Workflow */}
         <Section
           eyebrow="a workflow"
-          title="From a rough prompt to one you can depend on"
-          intro="The path most prompts take through promptopt. You don't have to run every step."
+          title="Rough prompt in, dependable prompt out"
         >
           <Workflow />
         </Section>
@@ -134,7 +138,7 @@ export default function HomePage() {
           id="install"
           eyebrow="install"
           title="One command, no dependencies"
-          intro="macOS and Linux, amd64 and arm64. Detects your platform, verifies the checksum, installs a single binary to ~/.local/bin."
+          intro="macOS and Linux, arm64 and amd64. One binary to ~/.local/bin."
         >
           <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
             <InstallBlock />
@@ -164,35 +168,35 @@ export default function HomePage() {
           id="architecture"
           eyebrow="how it is built"
           title="A thin CLI over a testable engine"
-          intro="The command layer parses input and picks a format. Everything below it has no idea the CLI exists."
+          intro="Everything below the command layer has no idea the CLI exists."
         >
           <Architecture />
         </Section>
 
         {/* 9 · Developer-first */}
-        <Section
-          eyebrow="built for a shell"
-          title="It behaves like the other tools in your pipeline"
-        >
+        <Section eyebrow="built for a shell" title="Behaves like the rest of your pipeline">
           <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
-            {devFacts.map((f) => (
-              <div key={f.title} className="bg-panel p-5">
+            {devFacts.map((f, i) => (
+              <Reveal
+                key={f.title}
+                delay={(i % 4) * 0.05}
+                className="bg-panel p-5 transition-colors hover:bg-raised"
+              >
                 <h3 className="font-mono text-sm text-fg">{f.title}</h3>
                 <p className="mt-2 text-sm text-muted">{f.body}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </Section>
 
         {/* 10 · Final CTA */}
-        <section className="border-t border-border py-20">
-          <div className="container-content text-center">
+        <section className="border-t border-border py-24">
+          <Reveal className="container-content text-center">
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
               Install promptopt
             </h2>
             <p className="mx-auto mt-3 max-w-md text-[0.95rem] text-muted">
-              One binary, one API key. Your prompts get the same scrutiny as
-              your code.
+              One binary, one API key.
             </p>
             <div className="mx-auto mt-6 flex max-w-lg items-center gap-3 rounded-md border border-border bg-panel px-3 py-2.5 font-mono text-xs">
               <code className="truncate text-fg">
@@ -217,7 +221,7 @@ export default function HomePage() {
                 Star on GitHub
               </a>
             </div>
-          </div>
+          </Reveal>
         </section>
       </main>
       <Footer />
