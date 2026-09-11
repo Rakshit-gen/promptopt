@@ -25,8 +25,8 @@ type Config struct {
 
 	Model       string        `yaml:"model"`
 	BaseURL     string        `yaml:"base_url"`
-	Output      string        `yaml:"output"`       // "text" or "json"
-	Color       string        `yaml:"color"`        // "auto", "always", "never"
+	Output      string        `yaml:"output"` // "text" or "json"
+	Color       string        `yaml:"color"`  // "auto", "always", "never"
 	Temperature float64       `yaml:"temperature"`
 	Timeout     time.Duration `yaml:"-"`
 	TimeoutRaw  string        `yaml:"timeout"`

@@ -33,7 +33,7 @@ type ExpandInput struct {
 }
 
 type expandRaw struct {
-	Expanded    string `json:"expanded"`
+	Expanded    string   `json:"expanded"`
 	Added       []string `json:"added"`
 	Assumptions []struct {
 		Field string `json:"field"`

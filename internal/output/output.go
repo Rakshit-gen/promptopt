@@ -82,11 +82,11 @@ func newTheme(color bool) Theme {
 	} else {
 		lipgloss.SetColorProfile(termenv.Ascii)
 	}
-	accent := lipgloss.Color("39")   // cyan-blue
-	dim := lipgloss.Color("244")     // grey
-	green := lipgloss.Color("35")    //
-	yellow := lipgloss.Color("214")  //
-	red := lipgloss.Color("203")     //
+	accent := lipgloss.Color("39")  // cyan-blue
+	dim := lipgloss.Color("244")    // grey
+	green := lipgloss.Color("35")   //
+	yellow := lipgloss.Color("214") //
+	red := lipgloss.Color("203")    //
 	return Theme{
 		Title:   lipgloss.NewStyle().Bold(true).Foreground(accent),
 		Heading: lipgloss.NewStyle().Bold(true),

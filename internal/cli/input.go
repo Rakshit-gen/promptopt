@@ -107,6 +107,17 @@ func stdinIsPipe() bool {
 	return (info.Mode() & os.ModeCharDevice) == 0
 }
 
+// inputIsPiped decides whether to read a prompt from stdin when no argument is
+// given. It returns true when stdin is a real pipe/file, or when a caller
+// (a test) has swapped the command's input stream for something other than
+// the process stdin.
+func inputIsPiped(in io.Reader) bool {
+	if f, ok := in.(*os.File); !ok || f != os.Stdin {
+		return true
+	}
+	return stdinIsPipe()
+}
+
 // writeOutputFile writes result text to path, creating parent dirs.
 func writeOutputFile(path, content string) error {
 	if !strings.HasSuffix(content, "\n") {

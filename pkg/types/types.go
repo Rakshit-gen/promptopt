@@ -119,8 +119,8 @@ type EvalResult struct {
 
 // TestCase is a generated probe used during evaluation.
 type TestCase struct {
-	Name       string `json:"name"`
-	Input      string `json:"input"`
+	Name        string `json:"name"`
+	Input       string `json:"input"`
 	Expectation string `json:"expectation"`
 	// Assessment is the model's judgement of how the prompt would handle it.
 	Assessment string `json:"assessment"`

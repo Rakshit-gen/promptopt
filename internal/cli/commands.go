@@ -13,7 +13,7 @@ import (
 // this: describe the command, add its own flags, call the right engine method.
 func operate(g *globalFlags, cmd *cobra.Command, args []string, fn func(rc *runContext, prompt string) (any, string, error)) error {
 	name := cmd.Name()
-	src, err := resolvePrompt(name, args, cmd.InOrStdin(), stdinIsPipe())
+	src, err := resolvePrompt(name, args, cmd.InOrStdin(), inputIsPiped(cmd.InOrStdin()))
 	if err != nil {
 		return err
 	}
