@@ -1,7 +1,7 @@
 #!/bin/sh
 # promptopt installer.
 #
-#   curl -fsSL https://promptopt.dev/install.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/rakshit-gen/promptopt/master/scripts/install.sh | sh
 #
 # Downloads the release binary for your OS/architecture from GitHub Releases,
 # verifies its SHA256 checksum, and installs it into a user-local bin

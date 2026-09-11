@@ -43,9 +43,6 @@ checksum:
   name_template: "checksums.txt"
   algorithm: sha256
 
-sboms:
-  - artifacts: archive
-
 snapshot:
   version_template: "{{ incpatch .Version }}-next"
 
@@ -80,7 +77,7 @@ release:
     Install:
 
     ```
-    curl -fsSL https://promptopt.dev/install.sh | sh
+    curl -fsSL https://raw.githubusercontent.com/rakshit-gen/promptopt/master/scripts/install.sh | sh
     ```
 
 brews:
@@ -91,6 +88,10 @@ brews:
     homepage: "https://promptopt.dev"
     description: "AI-powered prompt engineering CLI backed by Groq"
     license: "MIT"
-    skip_upload: auto
+    # No HOMEBREW_TAP_TOKEN secret is configured yet, and the default
+    # GITHUB_TOKEN can't push to a different repo, so this would fail the
+    # release after the GitHub release itself already succeeded. Flip to
+    # `auto` once that secret exists.
+    skip_upload: true
     test: |
       system "#{bin}/promptopt", "--version"
