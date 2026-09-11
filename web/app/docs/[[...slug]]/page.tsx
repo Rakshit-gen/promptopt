@@ -41,7 +41,7 @@ export default async function DocPage({ params }: Props) {
 
   return (
     <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_13rem] xl:gap-10">
-      <article className="min-w-0">
+      <article className="min-w-0 animate-fade-up">
         <Breadcrumbs meta={doc.meta} />
         <Markdown>{doc.content}</Markdown>
         <Pager prev={doc.prev} next={doc.next} />
