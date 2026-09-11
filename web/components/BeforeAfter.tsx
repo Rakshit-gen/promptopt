@@ -49,7 +49,7 @@ export function BeforeAfter() {
             )}
           </div>
         </div>
-        <pre className="overflow-x-auto p-4 font-mono text-[0.8rem] leading-6 text-fg/90">
+        <pre className="h-[22rem] overflow-auto p-4 font-mono text-[0.8rem] leading-6 text-fg/90">
           {body}
         </pre>
       </div>
