@@ -12,10 +12,12 @@ export function TerminalChrome({
   title = "zsh",
   children,
   className = "",
+  contentClassName = "p-4 font-mono text-[0.8rem] leading-6 sm:text-[0.83rem]",
 }: {
   title?: string;
   children: React.ReactNode;
   className?: string;
+  contentClassName?: string;
 }) {
   return (
     <div
@@ -29,9 +31,7 @@ export function TerminalChrome({
         </span>
         <span className="ml-1 font-mono text-2xs text-faint">{title}</span>
       </div>
-      <div className="p-4 font-mono text-[0.8rem] leading-6 sm:text-[0.83rem]">
-        {children}
-      </div>
+      <div className={contentClassName}>{children}</div>
     </div>
   );
 }

@@ -129,10 +129,13 @@ export function TypingTerminal({ scripts }: { scripts: TerminalLine[][] }) {
         ))}
       </div>
 
-      <TerminalChrome title="zsh · promptopt">
+      <TerminalChrome
+        title="zsh · promptopt"
+        contentClassName="p-4 font-mono text-[0.72rem] leading-6 sm:text-[0.83rem]"
+      >
         <div
           aria-live="polite"
-          className="h-[16.5rem] overflow-hidden sm:h-[17rem]"
+          className="h-[19.5rem] overflow-hidden sm:h-[17rem]"
         >
           <div className="whitespace-pre-wrap break-words text-fg">
             <span className="select-none text-accent">$ </span>
