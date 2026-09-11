@@ -1,6 +1,17 @@
 // Site-wide constants. The repo and domain do not necessarily exist yet;
 // these are the single place to change them.
 
+// The domain promptopt.dev is reserved but not yet pointed at anything, so
+// metadata (canonical URL, OG image) resolves against wherever the site is
+// actually deployed: Vercel's own production alias, then its per-deployment
+// URL, then the domain, in that order. Once DNS is live this keeps working
+// unchanged since site.url becomes reachable too.
+export const siteUrl = `https://${
+  process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+  process.env.VERCEL_URL ||
+  "promptopt.dev"
+}`;
+
 export const site = {
   name: "promptopt",
   // A concise technical positioning statement, not a slogan.

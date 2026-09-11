@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { site } from "@/lib/site";
+import { site, siteUrl } from "@/lib/site";
 import { Grain } from "@/components/Grain";
 import "./globals.css";
 
@@ -18,7 +18,7 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  metadataBase: new URL(siteUrl),
   title: {
     default: `${site.name} · ${site.tagline}`,
     template: `%s · ${site.name}`,
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    url: site.url,
+    url: "/",
     title: `${site.name} · ${site.tagline}`,
     description: site.description,
     siteName: site.name,
